@@ -5,7 +5,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  release-gitee:
+  on-push:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -19,7 +19,6 @@ jobs:
         uses: actions/github-script@v6
         with:
           script: |
-            console.log(context.payload.commits)
-            for (const id in github.rest) {
+            for (const id in github.rest.git) {
               console.log(id)
             }
