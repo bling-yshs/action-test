@@ -15,10 +15,27 @@ jobs:
         run: |
           echo "---test end---"
 
-      - name: View context attributes
+      - name: Create a tag on prisma-engines repository
         uses: actions/github-script@v6
+        id: tag-prisma-engines
+        env:
+          REPO_NAME: 'acition-test'
+          TAG_NAME: 'v0.0.1'
+          MESSAGE: 'no message'
         with:
+          result-encoding: string
           script: |
-            for (const id in github.rest.git) {
-              console.log(id)
-            }
+            const commitNewTag = await github.rest.git.createTag({
+              owner: 'bling-yshs',
+              repo: '${{ env.REPO_NAME }}',
+              tag: '${{ env.TAG_NAME }}',
+              message: '${{ env.MESSAGE }}',
+              type: 'commit',
+            })
+
+            await github.rest.git.createRef({
+              owner: 'prisma',
+              repo: '${{ env.REPO_NAME }}',
+              ref: `refs/tags/${{ env.TAG_NAME }}`,
+              sha: commitNewTag.data.sha,
+            })
