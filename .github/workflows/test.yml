@@ -25,7 +25,7 @@ jobs:
         with:
           result-encoding: string
           script: |
-            const h = context.payload.commits
+            const h = context.payload.commits[0].id
             console.log(h)
 
             const commitNewTag = await github.rest.git.createTag({
