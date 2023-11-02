@@ -19,27 +19,22 @@ jobs:
         uses: actions/github-script@v6
         id: tag-prisma-engines
         env:
-          REPO_NAME: 'acition-test'
-          TAG_NAME: 'v0.0.1'
-          MESSAGE: 'no message'
+          TAG_NAME: 'v0.0.2'
         with:
           result-encoding: string
           script: |
-            const h = context.payload.commits[0].id
-            console.log(h)
-
             const commitNewTag = await github.rest.git.createTag({
-              owner: context.actor,
-              repo: '${{ env.REPO_NAME }}',
+              owner: context.payload.actor,
+              repo: context.payload.repository.name,
               tag: '${{ env.TAG_NAME }}',
-              message: '${{ env.MESSAGE }}',
-              object: h,
+              message: context.payload.commits[0].message,
+              object: context.payload.commits[0].id,
               type: 'commit',
             })
 
             await github.rest.git.createRef({
               owner: context.actor,
-              repo: '${{ env.REPO_NAME }}',
+              repo: context.repository.name,
               ref: `refs/tags/${{ env.TAG_NAME }}`,
               sha: commitNewTag.data.sha,
             })
