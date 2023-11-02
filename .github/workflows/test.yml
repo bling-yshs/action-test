@@ -23,8 +23,9 @@ jobs:
         with:
           result-encoding: string
           script: |
+            console.log(owner)
             const commitNewTag = await github.rest.git.createTag({
-              owner: context.payload.repository.actor,
+              owner: context.repo.owner,
               repo: context.payload.repository.name,
               tag: '${{ env.TAG_NAME }}',
               message: context.payload.commits[0].message,
@@ -33,7 +34,7 @@ jobs:
             })
 
             await github.rest.git.createRef({
-              owner: context.payload.repository.actor,
+              owner: context.repo.owner,
               repo: context.repository.name,
               ref: `refs/tags/${{ env.TAG_NAME }}`,
               sha: commitNewTag.data.sha,
