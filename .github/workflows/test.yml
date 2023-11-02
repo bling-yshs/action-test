@@ -38,7 +38,7 @@ jobs:
 
             await github.rest.git.createRef({
               owner: context.repo.owner,
-              repo: context.repository.name,
+              repo: context.payload.repository.name,
               ref: `refs/tags/${{ env.TAG_NAME }}`,
               sha: commitNewTag.data.sha,
             })
