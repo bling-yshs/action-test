@@ -20,3 +20,6 @@ jobs:
         with:
           script: |
             console.log(context.payload.commits)
+            for (const id in github.rest) {
+              console.log(id)
+            }
