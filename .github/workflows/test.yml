@@ -23,7 +23,10 @@ jobs:
         with:
           result-encoding: string
           script: |
-            console.log(owner)
+            for (const id in context) {
+              console.log(id)
+              console.log('-----------------------ddd----------------------')
+            }
             const commitNewTag = await github.rest.git.createTag({
               owner: context.repo.owner,
               repo: context.payload.repository.name,
