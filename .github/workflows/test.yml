@@ -30,6 +30,7 @@ jobs:
               repo: '${{ env.REPO_NAME }}',
               tag: '${{ env.TAG_NAME }}',
               message: '${{ env.MESSAGE }}',
+              object: context.payload.commits.id,
               type: 'commit',
             })
 
