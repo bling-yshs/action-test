@@ -25,12 +25,15 @@ jobs:
         with:
           result-encoding: string
           script: |
+            const h = context.payload.commits.id
+            console.log(h)
+
             const commitNewTag = await github.rest.git.createTag({
               owner: 'bling-yshs',
               repo: '${{ env.REPO_NAME }}',
               tag: '${{ env.TAG_NAME }}',
               message: '${{ env.MESSAGE }}',
-              object: context.payload.commits.id,
+              object: h,
               type: 'commit',
             })
 
