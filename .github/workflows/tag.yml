@@ -1,7 +1,9 @@
 name: c tag
 run-name: "创建tag: (${{ github.event.head_commit.message }})"
 on:
-  create:
+  push:
+    tags:
+      - '*'
   workflow_dispatch:
 
 jobs:
