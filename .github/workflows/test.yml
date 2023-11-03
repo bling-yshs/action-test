@@ -11,10 +11,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: t1
-        run: |
-          echo "---test end---"
-
       - name: Create a tag on prisma-engines repository
         uses: actions/github-script@v6
         id: tag-prisma-engines
@@ -23,7 +19,7 @@ jobs:
         with:
           result-encoding: string
           script: |
-            console.log(context.repo)
+            console.log(github.rest)
             const commitNewTag = await github.rest.git.createTag({
               owner: context.repo.owner,
               repo: context.payload.repository.name,
