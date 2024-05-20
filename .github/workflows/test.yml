@@ -15,5 +15,4 @@ jobs:
           force_update: true
           dst_key: ${{ secrets.SSH_PRIVATE_KEY }}
           dst_token: ${{ secrets.GITEE_PERSIONAL_TOKEN }}
-          mappings: "new-empty=>new-empty-test"
-          static_list: "new-empty"
+          static_list: "YzLauncher-windows-updater"
