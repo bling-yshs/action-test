@@ -1,36 +1,20 @@
-name: on push
-run-name: "推送时固定执行: (${{ github.event.head_commit.message }})"
+name: update
+run-name: '更新启动器公告'
 on:
-  push:
   workflow_dispatch:
 
 jobs:
-  on-push:
+  sync-to-gitee:
+    needs: update
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Create a tag on prisma-engines repository
-        uses: actions/github-script@v6
-        id: tag-prisma-engines
-        env:
-          TAG_NAME: 'v0.0.6'
+      - name: Mirror GitHub to Gitee
+        uses: Yikun/hub-mirror-action@master
         with:
-          result-encoding: string
-          script: |
-            const commitNewTag = await github.rest.git.createTag({
-              owner: context.repo.owner,
-              repo: context.payload.repository.name,
-              tag: '${{ env.TAG_NAME }}',
-              message: context.payload.commits[0].message,
-              object: context.payload.commits[0].id,
-              type: 'commit',
-            })
-
-            await github.rest.git.createRef({
-              owner: context.repo.owner,
-              repo: context.payload.repository.name,
-              ref: `refs/tags/${{ env.TAG_NAME }}`,
-              sha: commitNewTag.data.sha,
-            })
+          src: github/bling-yshs
+          dst: gitee/bling_yshs
+          force_update: true
+          dst_key: ${{ secrets.SSH_PRIVATE_KEY }}
+          dst_token: ${{ secrets.GITEE_PERSIONAL_TOKEN }}
+          mappings: "new-empty=>new-empty-test"
+          static_list: "new-empty"
