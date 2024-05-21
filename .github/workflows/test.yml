@@ -9,4 +9,4 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
       - name: Run a one-line script
-        run: echo "This is run ${{ github.run_id }} number ${{ github.run_number }} of workflow ${{ github.workflow }}"
+        run: echo "This is run ${{ github.action }} number ${{ github.run_number }} of workflow ${{ github.workflow }}"
