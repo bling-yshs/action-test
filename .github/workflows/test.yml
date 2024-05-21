@@ -8,5 +8,7 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-      - name: Run a one-line script
-        run: echo "This is run ${{ github.action }} number ${{ github.run_number }} of workflow ${{ github.workflow }}"
+      - name: Dump GitHub context
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github) }}
+        run: echo "$GITHUB_CONTEXT"
