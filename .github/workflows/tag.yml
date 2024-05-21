@@ -1,0 +1,11 @@
+name: tag
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+jobs:
+  sync-to-gitee:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Sync to gitee
+        run : echo "Sync to gitee"
