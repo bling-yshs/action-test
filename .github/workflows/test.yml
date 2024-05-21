@@ -1,18 +1,12 @@
-name: update
-run-name: '更新启动器公告'
-on:
-  workflow_dispatch:
+name: CI
+
+on: [push]
 
 jobs:
-  sync-to-gitee:
+  build:
     runs-on: ubuntu-latest
     steps:
-      - name: Mirror GitHub to Gitee
-        uses: Yikun/hub-mirror-action@master
-        with:
-          src: github/bling-yshs
-          dst: gitee/bling_yshs
-          force_update: true
-          dst_key: ${{ secrets.SSH_PRIVATE_KEY }}
-          dst_token: ${{ secrets.GITEE_PERSIONAL_TOKEN }}
-          static_list: "YzLauncher-windows-updater"
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Run a one-line script
+        run: echo "This is run ${{ github.run_id }} number ${{ github.run_number }} of workflow ${{ github.workflow }}"
