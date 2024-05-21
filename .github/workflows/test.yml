@@ -1,14 +1,19 @@
-name: CI
-
-on: [push]
-
+name: sync-to-gitee
+run-name: '🔁 同步到 Gitee (${{ github.event.commits[0].message }})'
+on:
+  workflow_dispatch:
+  push:
 jobs:
-  build:
+  sync-to-gitee:
+    needs: update
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-      - name: Dump GitHub context
-        env:
-          GITHUB_CONTEXT: ${{ toJson(github) }}
-        run: echo "$GITHUB_CONTEXT"
+      - name: sync to gitee
+        uses: Yikun/hub-mirror-action@master
+        with:
+          src: github/bling-yshs
+          dst: gitee/bling_yshs
+          force_update: true
+          dst_key: ${{ secrets.SSH_PRIVATE_KEY }}
+          dst_token: ${{ secrets.GITEE_PERSIONAL_TOKEN }}
+          static_list: "action-test"
