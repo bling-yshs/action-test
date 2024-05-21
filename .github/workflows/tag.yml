@@ -1,15 +1,29 @@
-name: tag
-run-name: '🔁 同步到 Gitee (${{ github.ref_name }})'
+name: release
+run-name: '🚀 发布新版本 (${{ github.ref_name }})'
 on:
+  workflow_dispatch:
   push:
     tags:
       - 'v*.*.*'
+
 jobs:
-  sync-to-gitee:
+  auto-build:
     runs-on: ubuntu-latest
     steps:
-      - name: Dump GitHub context
-        env:
-          GITHUB_CONTEXT: ${{ toJson(github) }}
-        run: echo "$GITHUB_CONTEXT"
+      - name: Checkout
+        uses: actions/checkout@v4
 
+      - name: Get the changelog
+        run: echo "${{ steps.changelog.outputs.changelog }}"
+
+      - name: Create Release
+        uses: ncipollo/release-action@v1
+        if: steps.create_tag.outputs.successful
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          name: ${{ github.ref_name }}
+          tag: ${{ github.ref_name }}
+          body: |
+            ${{ steps.changelog.outputs.compareurl }}
+            ${{ steps.changelog.outputs.changelog }}
+          artifacts: README.md
