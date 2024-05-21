@@ -9,28 +9,7 @@ jobs:
   sync-to-gitee:
     runs-on: ubuntu-latest
     steps:
-      #      返回上一级，然后输出文件结构
-      - name: List files
-        run: |
-          cd ..
-          ls -lR
-
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      #      返回上一级，然后输出文件结构
-      - name: List files
-        run: |
-          cd ..
-          ls -lR
-
       - name: Checkout
         uses: actions/checkout@v4
         with:
           repository: 'bling-yshs/YzLauncher-windows-updater'
-
-      #      返回上一级，然后输出文件结构
-      - name: List files
-        run: |
-          cd ..
-          ls -lR
