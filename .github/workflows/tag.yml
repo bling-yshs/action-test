@@ -1,4 +1,5 @@
 name: tag
+run-name: '🔁 同步到 Gitee (${{ github.ref_name }})'
 on:
   push:
     tags:
