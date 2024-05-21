@@ -5,7 +5,6 @@ on:
   push:
 jobs:
   sync-to-gitee:
-    needs: update
     runs-on: ubuntu-latest
     steps:
       - name: sync to gitee
