@@ -21,6 +21,7 @@ jobs:
       #          filter-author: (jaywcjlove|小弟调调™|dependabot|renovate\\[bot\\]|dependabot\\[bot\\]|Renovate Bot)
           filter: '^fixup:'
 
+
       - name: Get the changelog
         run: echo "${{ steps.changelog.outputs.changelog }}"
 
