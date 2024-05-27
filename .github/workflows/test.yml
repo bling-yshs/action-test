@@ -23,8 +23,10 @@ jobs:
         with:
           test: '^release:'
 
+      - run: echo ${{ steps.create-tag.outputs.successful }}
+
       - run: echo "yes"
-        if: steps.create-tag.outputs.successful == 'true'
+        if: steps.create-tag.outputs.successful
 
       - run: echo "no"
-        if: steps.create-tag.outputs.successful == 'false'
+        if: steps.create-tag.outputs.successful
