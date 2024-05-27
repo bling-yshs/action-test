@@ -7,17 +7,12 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
-
+      - name: Checkout
+        uses: actions/checkout@v4
       - name: Print GitHub context
         run: echo "${{ toJSON(github) }}"
-
-      - name: Print Job context
-        run: echo "${{ toJSON(job) }}"
-
-      - name: Print Steps context
-        run: echo "${{ toJSON(steps) }}"
-
-      - name: Print Runner context
-        run: echo "${{ toJSON(runner) }}"
+      - name: Invoke workflow with inputs
+        uses: benc-uk/workflow-dispatch@v1.2.3
+        with:
+          workflow: echo.yml
+          inputs: '{ "config-path": "你好" }'

@@ -11,9 +11,14 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - name: Create Tag
+        id: create-tag
+        uses: jaywcjlove/create-tag-action@main
+        with:
+          test: '^release:'
 
-      - run: echo ${{ inputs.config-path }}
+      - run: echo "yes"
+        if: steps.create_tag.outputs.successful == 'true'
 
-
+      - run: echo "no"
+        if: steps.create_tag.outputs.successful == 'false'
