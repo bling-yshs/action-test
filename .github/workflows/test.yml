@@ -10,11 +10,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - run: pwd
-
-      - run: ls -al
-
-      - uses: ./.github/workflows/echo.yml
+      - uses: dusansimic/trigger-workflow-action@v0.1.0
         with:
-          config-path: abc
-
+          name: echo.yml
+          owner: bling-yshs
+          repo: action-test
