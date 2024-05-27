@@ -18,7 +18,7 @@ jobs:
           test: '^release:'
 
       - run: echo "yes"
-        if: steps.create_tag.outputs.successful == 'true'
+        if: steps.create-tag.outputs.successful == 'true'
 
       - run: echo "no"
-        if: steps.create_tag.outputs.successful == 'false'
+        if: steps.create-tag.outputs.successful == 'false'

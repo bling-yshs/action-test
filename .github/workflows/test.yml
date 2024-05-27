@@ -9,10 +9,22 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Print GitHub context
-        run: echo "${{ toJSON(github) }}"
-      - name: Invoke workflow with inputs
-        uses: benc-uk/workflow-dispatch@v1.2.3
+#      - name: Print GitHub context
+#        run: echo "${{ toJSON(github) }}"
+#      - name: Invoke workflow with inputs
+#        uses: benc-uk/workflow-dispatch@v1.2.3
+#        with:
+#          workflow: echo.yml
+#          inputs: '{ "config-path": "你好" }'
+
+      - name: Create Tag
+        id: create-tag
+        uses: jaywcjlove/create-tag-action@main
         with:
-          workflow: echo.yml
-          inputs: '{ "config-path": "你好" }'
+          test: '^release:'
+
+      - run: echo "yes"
+        if: steps.create-tag.outputs.successful == 'true'
+
+      - run: echo "no"
+        if: steps.create-tag.outputs.successful == 'false'
