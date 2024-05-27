@@ -10,8 +10,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - uses: dusansimic/trigger-workflow-action@v0.1.0
+      - name: Invoke workflow with inputs
+        uses: benc-uk/workflow-dispatch@@v1.2.3
         with:
-          name: echo.yml
-          owner: bling-yshs
-          repo: action-test
+          workflow: echo.yml
+          inputs: '{ "config-path": "你好" }'
