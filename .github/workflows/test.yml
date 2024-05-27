@@ -19,7 +19,7 @@ jobs:
       - run: echo ${{ steps.create_tag.outputs.successful }}
 
       - run: echo "yes"
-        if: steps.create_tag.outputs.successful
+        if: steps.create_tag.outputs.successful == 'true'
 
       - run: echo "no"
-        if: steps.create_tag.outputs.successful
+        if: steps.create_tag.outputs.successful == 'false'
