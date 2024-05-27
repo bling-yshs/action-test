@@ -18,7 +18,7 @@ jobs:
         uses: jaywcjlove/changelog-generator@main
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-      #          filter-author: (jaywcjlove|小弟调调™|dependabot|renovate\\[bot\\]|dependabot\\[bot\\]|Renovate Bot)
+#                filter-author: (jaywcjlove|小弟调调™|dependabot|renovate\\[bot\\]|dependabot\\[bot\\]|Renovate Bot)
           filter: '^(fixup|ci):'
 
 
