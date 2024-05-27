@@ -10,6 +10,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - run: pwd
+
+      - run: ls -al
+
       - uses: ./.github/workflows/echo.yml
         with:
           config-path: abc
