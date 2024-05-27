@@ -9,10 +9,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-
+      - name: Print GitHub context
+        run: echo "${{ toJSON(github) }}"
       - name: Invoke workflow with inputs
         uses: benc-uk/workflow-dispatch@v1.2.3
         with:
           workflow: echo.yml
           inputs: '{ "config-path": "你好" }'
-
