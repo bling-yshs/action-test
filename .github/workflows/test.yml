@@ -10,10 +10,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Create Tag
-        id: create_tag
-        uses: jaywcjlove/create-tag-action@main
+      - uses: ./.github/workflows/echo.yml
         with:
-          test: '^release:'
-
+          config-path: abc
 
