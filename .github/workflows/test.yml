@@ -18,15 +18,15 @@ jobs:
 #          inputs: '{ "config-path": "你好" }'
 
       - name: Create Tag
-        id: create-tag
+        id: create_tag
         uses: jaywcjlove/create-tag-action@main
         with:
           test: '^release:'
 
-      - run: echo ${{ steps.create-tag.outputs.successful }}
+      - run: echo ${{ steps.create_tag.outputs.successful }}
 
       - run: echo "yes"
-        if: steps.create-tag.outputs.successful
+        if: steps.create_tag.outputs.successful
 
       - run: echo "no"
-        if: steps.create-tag.outputs.successful
+        if: steps.create_tag.outputs.successful
