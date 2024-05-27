@@ -11,16 +11,16 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Create Tag
-        id: create_tag
+        id: create-tag
         uses: jaywcjlove/create-tag-action@main
         with:
           test: '^release:'
 
-      - run: echo ${{ steps.create_tag.outputs.successful }}
+      - run: echo ${{ steps.create-tag.outputs.successful }}
 
       - run: echo "yes"
-        if: steps.create_tag.outputs.successful == 'true'
+        if: steps.create-tag.outputs.successful == 'true'
 
       - run: echo "no"
-        if: steps.create_tag.outputs.successful == 'false'
+        if: steps.create-tag.outputs.successful == 'false'
 
