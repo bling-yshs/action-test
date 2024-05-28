@@ -1,7 +1,7 @@
 name: test
+run-name: 这是一个自定义的名字
 on:
   workflow_dispatch:
-  push:
 
 jobs:
   test:
@@ -10,17 +10,5 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Create Tag
-        id: create-tag
-        uses: jaywcjlove/create-tag-action@main
-        with:
-          test: '^release:'
-
-      - run: echo ${{ steps.create-tag.outputs.successful }}
-
-      - run: echo "yes"
-        if: steps.create-tag.outputs.successful == 'true'
-
-      - run: echo "no"
-        if: steps.create-tag.outputs.successful == 'false'
-
+      - run: echo hello
+# 这是一次提交
