@@ -1,5 +1,4 @@
 name: test
-run-name: 这是一个自定义的名字
 on:
   workflow_dispatch:
   push:
@@ -15,6 +14,6 @@ jobs:
 
       - run: |
           ls -al
-          apt update
-          apt-get install tree
+          sudo apt update
+          sudo apt-get install tree
           tree
