@@ -12,9 +12,11 @@ jobs:
         with:
           path: 'current'
 
-      - run: cd current/
-
       - run: pwd
+
+      - run: ls -al
+
+      - run: cd current/
 
       - run: ls -al
 
