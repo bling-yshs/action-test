@@ -1,27 +1,16 @@
 name: test
 on:
   workflow_dispatch:
-    multithreading:
-      description: '是否开启多线程编译'
-      required: true
-      type: choice
-      options:
-        - '是'
-        - '否'
+  push:
+
 
 jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - name: Clone repo
+      - name: 克隆仓库
         uses: actions/checkout@v4
         with:
           path: 'current'
 
-      - run: echo ${{inputs.multithreading}}
-
-      - name: Upload config before build
-        uses: actions/upload-artifact@v4
-        with:
-          name: config before build
-          path: current/README.md
+      - run: echo ok
