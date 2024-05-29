@@ -16,7 +16,9 @@ jobs:
 
       - run: ls -al
 
-      - run: cd current/
+      - run: |
+          cd current/
+          ls -al
 
       - run: ls -al
 
