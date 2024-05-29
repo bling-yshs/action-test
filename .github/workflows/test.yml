@@ -2,6 +2,7 @@ name: test
 run-name: 这是一个自定义的名字
 on:
   workflow_dispatch:
+  push:
 
 jobs:
   test:
