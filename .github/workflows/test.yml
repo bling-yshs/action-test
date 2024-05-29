@@ -11,9 +11,19 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: 'bling-yshs/HYZL-updater'
+          path: 'updater'
 
       - run: |
           ls -al
-          sudo apt update
-          sudo apt-get install tree
-          tree
+          pwd
+          
+
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          repository: 'padavanonly/immortalwrtARM'
+          path: 'test'
+
+      - run: |
+          ls -al
+          pwd
