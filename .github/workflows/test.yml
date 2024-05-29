@@ -1,29 +1,18 @@
 name: test
 on:
   workflow_dispatch:
-  push:
+    inputs:
+      owner:
+        description: 'OpenWrt 仓库的拥有者'
+        type: string
+        required: true
+      repo:
+        description: 'OpenWrt 仓库的名字'
+        type: string
+        required: true
 
 jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-        with:
-          repository: 'bling-yshs/HYZL-updater'
-          path: 'updater'
-
-      - run: |
-          ls -al
-          pwd
-          
-
-      - name: Checkout
-        uses: actions/checkout@v4
-        with:
-          repository: 'padavanonly/immortalwrtARM'
-          path: 'test'
-
-      - run: |
-          ls -al
-          pwd
+      - run: echo ${{inputs.owner}}
