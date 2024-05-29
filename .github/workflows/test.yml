@@ -9,8 +9,11 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          repository: 'bling-yshs/HYZL-updater'
 
-      - run: echo hello
-# 这是一次提交
-# 这是第二次提交
-# 这是第七次提交
+      - run: |
+          ls -al
+          apt update
+          apt-get install tree
+          tree
