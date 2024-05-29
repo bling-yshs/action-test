@@ -12,23 +12,8 @@ jobs:
         with:
           path: 'current'
 
-      - run: pwd
-
-      - run: ls -al
-
-      - run: ls -al
-        working-directory: current/
-
-      - run: ls -al
-
-      - run: |
-          cd current/
-          ls -al
-
-      - run: ls -al
-
       - name: Upload config before build
         uses: actions/upload-artifact@v4
         with:
           name: config before build
-          path: README.md
+          path: current/README.md
