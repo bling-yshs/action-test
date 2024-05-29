@@ -1,18 +1,21 @@
 name: test
 on:
   workflow_dispatch:
-    inputs:
-      owner:
-        description: 'OpenWrt 仓库的拥有者'
-        type: string
-        required: true
-      repo:
-        description: 'OpenWrt 仓库的名字'
-        type: string
-        required: true
+  push:
 
 jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - run: echo ${{inputs.owner}}
+      - name: Clone repo
+        uses: actions/checkout@v4
+        with:
+          path: 'current'
+
+      - run: cd current/
+
+      - name: Upload config before build
+        uses: actions/upload-artifact@v4
+        with:
+          name: config before build
+          path: README.md
