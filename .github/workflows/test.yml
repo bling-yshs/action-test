@@ -16,6 +16,11 @@ jobs:
 
       - run: ls -al
 
+      - run: ls -al
+        working-directory: current/
+
+      - run: ls -al
+
       - run: |
           cd current/
           ls -al
