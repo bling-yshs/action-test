@@ -8,10 +8,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: create tag
-        uses: jaywcjlove/create-tag-action@v2.1.0
+      - name: Create/Update tag
+        uses: rickstaa/action-create-tag@v1.7.2
         with:
-          version: v1.0.0
+          tag: v1.0.0
+          tag_exists_error: false
 
       - run: zip -r hub.zip .github
 
@@ -27,5 +28,3 @@ jobs:
           allowUpdates: true
           artifacts: 'hub.zip'
           tag: v1.0.0
-
-
