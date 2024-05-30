@@ -7,19 +7,21 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          path: 'current'
 
       - name: Create/Update tag
         uses: rickstaa/action-create-tag@v1.7.2
         with:
           tag: v1.0.0
           force_push_tag: true
-      - run: zip -r hub.zip .github
+      - run: zip -r hub.zip current/.github
 
       - name: 上传编译结果到 Artifact (Upload build result to Artifact)
         uses: actions/upload-artifact@v4
         with:
           name: hub
-          path: hub.zip
+          path: current/.github
 
       - name: Create Release
         uses: ncipollo/release-action@v1.14.0
