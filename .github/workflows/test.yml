@@ -1,16 +1,9 @@
-name: test
-on:
-  workflow_dispatch:
-  push:
-
-
+name: CI
+on: [push]
 jobs:
-  test:
+  build:
     runs-on: ubuntu-latest
     steps:
-      - name: 克隆仓库
-        uses: actions/checkout@v4
-        with:
-          path: 'current'
-
-      - run: echo ok
+      - uses: actions/checkout@v4
+      - name: Setup upterm session
+        uses: lhotari/action-upterm@v1
