@@ -12,7 +12,7 @@ jobs:
         uses: rickstaa/action-create-tag@v1.7.2
         with:
           tag: v1.0.0
-          tag_exists_error: false
+          force_push_tag: true
       - run: zip -r hub.zip .github
 
       - name: 上传编译结果到 Artifact (Upload build result to Artifact)
