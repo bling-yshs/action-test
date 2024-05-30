@@ -18,6 +18,7 @@ jobs:
       - run: zip -r hub.zip current/.github
 
       - name: 上传编译结果到 Artifact (Upload build result to Artifact)
+        working-directory: current
         uses: actions/upload-artifact@v4
         with:
           name: hub
