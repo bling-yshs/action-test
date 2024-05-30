@@ -7,7 +7,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
+      - name: create tag
+        uses: jaywcjlove/create-tag-action@v2.1.0
+        with:
+          tag: v1.0.0
+
       - name: Create Release
         uses: ncipollo/release-action@v1.14.0
         with:
           artifacts: '.github'
+          tag: v1.0.0
+
