@@ -1,6 +1,5 @@
 name: CI
 on:
-  push:
   workflow_dispatch:
 jobs:
   build:
@@ -10,23 +9,32 @@ jobs:
         with:
           path: 'current'
 
-      - name: Create/Update tag
-        uses: rickstaa/action-create-tag@v1.7.2
+      - uses: randomairborne/r2-release@main
         with:
-          tag: v1.0.0
-          force_push_tag: true
-      - run: zip -r hub.zip current/.github
+          endpoint: ${{ secrets.S3_ENDPOINT }}
+          accesskeyid: ${{ secrets.S3_ACCESS_KEY_ID }}
+          secretaccesskey: ${{ secrets.S3_SECRET_ACCESS_KEY }}
+          bucket: 'test'
+          file: './README.md'
+          destination: '/foo/README.md'
 
-      - name: 上传编译结果到 Artifact (Upload build result to Artifact)
-        working-directory: current
-        uses: actions/upload-artifact@v4
-        with:
-          name: hub
-          path: current/.github
-
-      - name: Create Release
-        uses: ncipollo/release-action@v1.14.0
-        with:
-          allowUpdates: true
-          artifacts: 'hub.zip'
-          tag: v1.0.0
+#      - name: Create/Update tag
+#        uses: rickstaa/action-create-tag@v1.7.2
+#        with:
+#          tag: v1.0.0
+#          force_push_tag: true
+#      - run: zip -r hub.zip current/.github
+#
+#      - name: 上传编译结果到 Artifact (Upload build result to Artifact)
+#        working-directory: current
+#        uses: actions/upload-artifact@v4
+#        with:
+#          name: hub
+#          path: current/.github
+#
+#      - name: Create Release
+#        uses: ncipollo/release-action@v1.14.0
+#        with:
+#          allowUpdates: true
+#          artifacts: 'hub.zip'
+#          tag: v1.0.0
