@@ -23,7 +23,7 @@ jobs:
           secret_access_key: ${{ secrets.S3_SECRET_ACCESS_KEY }}
           bucket: test
           file: './README.md'
-          destination: '/foo'
+          destination: '/foo/README.md'
 
 #      - name: Create/Update tag
 #        uses: rickstaa/action-create-tag@v1.7.2
