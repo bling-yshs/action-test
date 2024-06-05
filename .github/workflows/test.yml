@@ -7,9 +7,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-        with:
-          path: 'current'
-
 #      - uses: randomairborne/r2-release@main
 #        with:
 #          endpoint: ${{ secrets.S3_ENDPOINT }}
