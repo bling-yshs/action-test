@@ -8,8 +8,19 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Print GitHub context
-        run: echo "${{ toJSON(github) }}"
+      - name: run docker
+        run: docker run --restart=always -v ./config.yml:/etc/bililive-go/config.yml -v ./videos:/srv/bililive -p 8080:8080 -d --name=zb chigusa/bililive-go
+
+      - name: 开启 SSH 服务 (Start SSH service)
+        uses: lhotari/action-upterm@v1
+        with:
+          wait-timeout-minutes: 20
+
+      - name: 上传编译结果到 Artifact (Upload build result to Artifact)
+        uses: actions/upload-artifact@v4
+        with:
+          name: video
+          path: ./videos
 #      - uses: randomairborne/r2-release@main
 #        with:
 #          endpoint: ${{ secrets.S3_ENDPOINT }}
