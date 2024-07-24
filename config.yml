@@ -13,7 +13,7 @@ feature:
   use_native_flv_parser: false
   remove_symbol_other_character: false
 live_rooms:
-  - url: https://live.bilibili.com/23063449
+  - url: https://live.bilibili.com/1455691
     is_listening: true
     quality: 0
     audio_only: false
