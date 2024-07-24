@@ -11,10 +11,10 @@ jobs:
       - name: run docker
         run: docker run --restart=always -v ./config.yml:/etc/bililive-go/config.yml -v ./videos:/srv/bililive -p 8080:8080 -d --name=zb chigusa/bililive-go
 
-      - name: 开启 SSH 服务 (Start SSH service)
-        uses: lhotari/action-upterm@v1
-        with:
-          wait-timeout-minutes: 20
+      - name: Sleep for 30 seconds
+        run: sleep 30s
+        shell: bash
+
 
       - name: stop docker
         run: docker stop zb
@@ -62,3 +62,9 @@ jobs:
 #          allowUpdates: true
 #          artifacts: 'hub.zip'
 #          tag: v1.0.0
+
+
+#      - name: 开启 SSH 服务 (Start SSH service)
+#        uses: lhotari/action-upterm@v1
+#        with:
+#          wait-timeout-minutes: 20
