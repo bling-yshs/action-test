@@ -672,3 +672,9 @@ acition-test
 </code></pre>
 </details>
 
+```yaml
+- name: 开启 SSH 服务 (Start SSH service)
+  uses: lhotari/action-upterm@v1
+  with:
+    wait-timeout-minutes: 20
+```
