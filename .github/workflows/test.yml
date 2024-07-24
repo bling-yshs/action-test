@@ -11,8 +11,9 @@ jobs:
       - name: run docker
         run: docker run --restart=always -v ./config.yml:/etc/bililive-go/config.yml -v ./videos:/srv/bililive -p 8080:8080 -d --name=zb chigusa/bililive-go
 
-      - name: wait for 1 minute
-        run: sleep 60
+      - name: Sleep for 30 seconds
+        run: sleep 30s
+        shell: bash
 
       - name: stop docker
         run: docker stop zb
