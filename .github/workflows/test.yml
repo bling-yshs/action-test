@@ -8,22 +8,22 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: run docker
-        run: docker run --restart=always -v ./config.yml:/etc/bililive-go/config.yml -v ./videos:/srv/bililive -p 8080:8080 -d --name=zb chigusa/bililive-go
-
       - name: Sleep for 30 seconds
         run: sleep 30s
         shell: bash
-
-
-      - name: stop docker
-        run: docker stop zb
-
-      - name: 上传编译结果到 Artifact (Upload build result to Artifact)
-        uses: actions/upload-artifact@v4
-        with:
-          name: video
-          path: ./videos
+#      - name: run docker
+#        run: docker run --restart=always -v ./config.yml:/etc/bililive-go/config.yml -v ./videos:/srv/bililive -p 8080:8080 -d --name=zb chigusa/bililive-go
+#
+#
+#
+#      - name: stop docker
+#        run: docker stop zb
+#
+#      - name: 上传编译结果到 Artifact (Upload build result to Artifact)
+#        uses: actions/upload-artifact@v4
+#        with:
+#          name: video
+#          path: ./videos
 #      - uses: randomairborne/r2-release@main
 #        with:
 #          endpoint: ${{ secrets.S3_ENDPOINT }}
