@@ -1,0 +1,12 @@
+name: 🛠️ 自动构建 (PR)
+
+on:
+  pull_request:
+
+jobs:
+  pr-build:
+    name: 🛠️ 自动构建
+    runs-on: ubuntu-latest
+    steps:
+      - name: 克隆当前仓库 (Clone current repo)
+        uses: actions/checkout@v4
