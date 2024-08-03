@@ -6,11 +6,11 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - run: echo "now=$(ls -al)" >> $GITHUB_OUTPUT
+      - run: echo "now=$(ls -al)" >> $GITHUB_ENV
         id: time
 
 
-      - run: echo "$now"
+      - run: echo "${now}"
 #      - uses: actions/checkout@v4
 
 #      - name: Sleep for 30 seconds
