@@ -6,11 +6,16 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - run: echo "now=$(ls -al)" >> $GITHUB_OUTPUT
+        id: time
 
-      - name: Sleep for 30 seconds
-        run: sleep 30s
-        shell: bash
+
+      - run: echo "$now"
+#      - uses: actions/checkout@v4
+
+#      - name: Sleep for 30 seconds
+#        run: sleep 30s
+#        shell: bash
 #      - name: run docker
 #        run: docker run --restart=always -v ./config.yml:/etc/bililive-go/config.yml -v ./videos:/srv/bililive -p 8080:8080 -d --name=zb chigusa/bililive-go
 #

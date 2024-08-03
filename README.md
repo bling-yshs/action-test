@@ -1,6 +1,8 @@
 # acition-test
 acition-test
 
+#### 打印 github 变量
+
 ```yaml
 - name: Print GitHub context
   run: echo "${{ toJSON(github) }}"
@@ -678,3 +680,17 @@ acition-test
   with:
     wait-timeout-minutes: 20
 ```
+
+#### 把步骤输出到 output 供后续使用
+
+```yaml
+- name: Set the output
+  id: get-time
+  run: echo "now=$(TZ='Asia/Shanghai' date +"%Y-%m-%d")" >> "$GITHUB_OUTPUT"
+```
+
+```yaml
+- name: Get the output
+  run: echo "The time was ${{ steps.get-time.outputs.now }}"
+```
+
