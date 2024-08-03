@@ -9,6 +9,7 @@ jobs:
       - run: echo "now=$(pwd)" >> "$GITHUB_ENV"
 
       - run: echo "${now}"
+        name: 现在是${{ env.now }}
 #      - uses: actions/checkout@v4
 
 #      - name: Sleep for 30 seconds
