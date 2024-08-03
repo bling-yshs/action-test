@@ -52,7 +52,7 @@ jobs:
           removeArtifacts: true
           prerelease: true
           artifacts: |
-            ./download/**/*
+            ./download/**/*.*
 
 
 
