@@ -14,14 +14,12 @@ jobs:
             target: x86_64-unknown-linux-gnu
     runs-on: ${{ matrix.os }}
     steps:
-      - run: echo "this is ${{matrix.target}}" >> "${{ matrix.os }}.txt"
-
       - name: 上传编译结果到 Artifact (Upload build result to Artifact)
         uses: actions/upload-artifact@v4
         with:
           name: '${{ matrix.target }}'
           path: |
-            ./${{ matrix.os }}.txt
+            ./src-tauri/target/${{ matrix.target }}/release/bundle/**/*
 
   upload:
     needs: build
@@ -34,7 +32,6 @@ jobs:
 
       - name: lsal
         run: ls -al
-
 
 
 
