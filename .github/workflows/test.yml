@@ -22,7 +22,7 @@ jobs:
           if-no-files-found: ignore
           name: '${{ matrix.target }}'
           path: |
-            path: ./src-tauri/target/${{ matrix.target }}/release/bundle/*/*.exe
+            path: ./src-tauri/target/${{ matrix.target }}/release/bundle/**/*.exe
 
 #            ./src-tauri/target/${{ matrix.target }}/release/bundle/**/*.deb
 
