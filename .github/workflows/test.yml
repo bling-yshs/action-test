@@ -22,10 +22,10 @@ jobs:
           if-no-files-found: ignore
           name: '${{ matrix.target }}'
           path: | 
-            ./src-tauri/target/${{ matrix.target }}/release/bundle/**/*.exe
-
-#            ./src-tauri/target/${{ matrix.target }}/release/bundle/**/*.deb
-
+            ./src-tauri/target/${{ matrix.target }}/release/bundle/nsis/*.exe
+            ./src-tauri/target/${{ matrix.target }}/release/bundle/dmg/*.dmg
+            ./src-tauri/target/${{ matrix.target }}/release/bundle/deb/*.deb
+            ./src-tauri/target/${{ matrix.target }}/release/bundle/rpm/*.rpm
   upload:
     needs: build
     runs-on: ubuntu-latest
