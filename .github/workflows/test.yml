@@ -36,10 +36,12 @@ jobs:
           path: ./download
           merge-multiple: true
 
-      - name: 创建 Tag (Create Tag)
-        uses: jaywcjlove/create-tag-action@main
+      - name: Bump version and push tag
+        id: tag_version
+        uses: mathieudutour/github-tag-action@v6.2
         with:
-          version: alpha
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          custom_tag: alpha
 
       - name: 上传编译结果到 pre-release (Upload build result to pre-release)
         uses: ncipollo/release-action@v1
