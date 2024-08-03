@@ -4,12 +4,25 @@ on:
   push:
 jobs:
   build:
-    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: windows-latest
+            target: x86_64-pc-windows-msvc
+          - os: ubuntu-22.04
+            target: x86_64-unknown-linux-gnu
+    runs-on: ${{ matrix.os }}
     steps:
-      - run: echo "now=$(pwd)" >> "$GITHUB_ENV"
+      - run: echo "this is ${{matrix.target}}" >> "${{ matrix.os }}.txt"
 
-      - run: echo "${now}"
-        name: 现在是${{ env.now }}
+      - name: 上传编译结果到 Artifact (Upload build result to Artifact)
+        uses: actions/upload-artifact@v4
+        with:
+          name: '${{ matrix.target }}'
+          path: |
+            ./${{ matrix.os }}.txt
+
 #      - uses: actions/checkout@v4
 
 #      - name: Sleep for 30 seconds
