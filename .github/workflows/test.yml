@@ -33,10 +33,25 @@ jobs:
       - name: Download Artifact
         uses: actions/download-artifact@v4
         with:
+          path: ./download
           merge-multiple: true
 
-      - name: lsal
-        run: ls -al
+      - name: 创建 Tag (Create Tag)
+        uses: jaywcjlove/create-tag-action@main
+        with:
+          version: alpha
+
+      - name: 上传编译结果到 pre-release (Upload build result to pre-release)
+        uses: ncipollo/release-action@v1
+        with:
+          tag: alpha
+          removeArtifacts: true
+          prerelease: true
+          artifacts: |
+            ./download/**/*.exe
+            ./download/**/*.dmg
+            ./download/**/*.deb
+            ./download/**/*.rpm
 
 
 
