@@ -20,6 +20,7 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           custom_tag: alpha
+          default_bump: false
         continue-on-error: true
       - name: Install jq
         run: sudo apt-get install -y jq
