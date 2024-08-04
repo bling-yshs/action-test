@@ -2,6 +2,7 @@ name: CI
 on:
   schedule:
     - cron: '*/5 * * * *'
+  push:
   workflow_dispatch:
 #  push:
 jobs:
@@ -16,8 +17,11 @@ jobs:
 #            target: x86_64-unknown-linux-gnu
     runs-on: ubuntu-latest
     steps:
-      - name: Print GitHub context
-        run: echo "${{ toJSON(github) }}"
+      - name: Install jq
+        run: sudo apt-get install -y jq
+
+      - name: Print and format GitHub context
+        run: echo '${{ toJSON(github) }}' | jq '.'
 #      - name: Checkout
 #        uses: actions/checkout@v4
 #      - name: 上传编译结果到 Artifact (Upload build result to Artifact)
