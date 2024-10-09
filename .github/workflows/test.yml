@@ -18,8 +18,9 @@ jobs:
       - name: 上传编译结果到 pre-release (Upload build result to pre-release)
         uses: ncipollo/release-action@v1
         with:
-          tag: alpha2
+          tag: alpha
           allowUpdates: true
+          omitBodyDuringUpdate: true
           removeArtifacts: true
           artifacts: |
             ./index.js
