@@ -7,14 +7,6 @@ on:
 #  push:
 jobs:
   build:
-#    strategy:
-#      fail-fast: false
-#      matrix:
-#        include:
-#          - os: windows-latest
-#            target: x86_64-pc-windows-msvc
-#          - os: ubuntu-22.04
-#            target: x86_64-unknown-linux-gnu
     runs-on: ubuntu-latest
     steps:
       - name: 上传编译结果到 pre-release (Upload build result to pre-release)
