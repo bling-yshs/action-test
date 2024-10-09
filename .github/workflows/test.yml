@@ -20,8 +20,8 @@ jobs:
         with:
           tag: alpha
           allowUpdates: true
-          omitBodyDuringUpdate: true
           removeArtifacts: true
+          body: test-body
           artifacts: |
             ./index.js
           generateReleaseNotes: true
