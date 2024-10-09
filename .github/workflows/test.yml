@@ -19,6 +19,7 @@ jobs:
         uses: ncipollo/release-action@v1
         with:
           tag: alpha
+          allowUpdates: true
           removeArtifacts: true
           artifacts: |
             ./index.js
