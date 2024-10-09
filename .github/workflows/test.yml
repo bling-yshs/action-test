@@ -1,6 +1,8 @@
 name: CI
 on:
   push:
+    branches:
+      - main
   workflow_dispatch:
 #  push:
 jobs:
@@ -21,7 +23,6 @@ jobs:
           tag: alpha
           allowUpdates: true
           removeArtifacts: true
-          body: ${{ github.event.head_commit.message }}
           artifacts: |
             index.js
           generateReleaseNotes: true
