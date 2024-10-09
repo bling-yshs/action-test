@@ -23,7 +23,7 @@ jobs:
           removeArtifacts: true
           body: test-body
           artifacts: |
-            ./index.js
+            index.js
           generateReleaseNotes: true
           prerelease: true
 #      - name: 创建 tag (Create tag)
