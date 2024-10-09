@@ -12,7 +12,7 @@ jobs:
       - name: 上传编译结果到 pre-release (Upload build result to pre-release)
         uses: ncipollo/release-action@v1
         with:
-          tag: v4.0.3
+          tag: v4.0.4
           allowUpdates: true
           removeArtifacts: true
           artifacts: |
