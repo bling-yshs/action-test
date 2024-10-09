@@ -12,13 +12,12 @@ jobs:
       - name: 上传编译结果到 pre-release (Upload build result to pre-release)
         uses: ncipollo/release-action@v1
         with:
-          tag: alpha
+          tag: 3.0.0
           allowUpdates: true
           removeArtifacts: true
           artifacts: |
             index.js
           generateReleaseNotes: true
-          prerelease: true
 #      - name: 创建 tag (Create tag)
 #        uses: mathieudutour/github-tag-action@v6.2
 #        with:
