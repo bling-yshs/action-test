@@ -9,15 +9,11 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: 上传编译结果到 pre-release (Upload build result to pre-release)
-        uses: ncipollo/release-action@v1
+      - name: 开启 SSH 服务 (Start SSH service)
+        uses: lhotari/action-upterm@v1
         with:
-          tag: v4.0.4
-          allowUpdates: true
-          removeArtifacts: true
-          artifacts: |
-            index.js
-          generateReleaseNotes: true
+          wait-timeout-minutes: 20
+
 #      - name: 创建 tag (Create tag)
 #        uses: mathieudutour/github-tag-action@v6.2
 #        with:
