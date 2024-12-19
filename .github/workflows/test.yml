@@ -13,7 +13,7 @@ jobs:
         uses: peter-evans/repository-dispatch@v3
         with:
           event-type: test-event
-          client-payload: '{\"name\":\"张三\",\"age\":25}'
+          client-payload: '{"name":"张三","age":25}'
 #      - name: 开启 SSH 服务 (Start SSH service)
 #        uses: lhotari/action-upterm@v1
 #        with:
