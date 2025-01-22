@@ -15,15 +15,20 @@ jobs:
       - name: 克隆当前仓库 (Clone current repo)
         uses: actions/checkout@v4
 
-      - name: 构建 Docker 镜像 (Build Docker image)
-        run: |
-          cd yunzai-docker-image
-          docker build -t yunzai-bot:latest .
-
-      - name: 导出 Docker 镜像 (Export Docker image)
-        run: |
-          mkdir -p artifacts
-          docker save yunzai-bot:latest > artifacts/yunzai-bot.tar
+      - name: 设置 Docker Buildx (Setup Docker Buildx)
+        uses: docker/setup-buildx-action@v3
+        
+      - name: 构建并导出镜像 (Build and export image)
+        uses: docker/build-push-action@v6
+        with:
+          context: ./yunzai-docker-image
+          file: ./yunzai-docker-image/Dockerfile
+          platforms: linux/amd64
+          outputs: type=docker,dest=artifacts/yunzai-bot.tar
+          tags: |
+            yunzai-bot:latest
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
 
       - name: 上传 Docker 镜像 (Upload Docker image artifact)
         uses: actions/upload-artifact@v4

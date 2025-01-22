@@ -1,9 +1,8 @@
 FROM debian:12.9
 
 # 安装nodejs和其他依赖
-RUN apt update && \
-    apt install wget curl gpg -y && \
-    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash && \
+RUN apt update && apt install -y wget curl gpg
+RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash && \
     echo 'export NVM_DIR="$HOME/.nvm"' >> ~/.bashrc && \
     echo '[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"' >> ~/.bashrc && \
     export NVM_DIR="$HOME/.nvm" && \
