@@ -1,7 +1,9 @@
 FROM debian:12.9
 
+WORKDIR /app
+
 # 安装nodejs和其他依赖
-RUN apt update && apt install -y wget curl gpg
+RUN apt update && apt install -y wget curl gpg git
 RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash && \
     echo 'export NVM_DIR="$HOME/.nvm"' >> ~/.bashrc && \
     echo '[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"' >> ~/.bashrc && \
@@ -11,9 +13,7 @@ RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | b
     nvm use 23 && \
     # 安装pnpm
     corepack enable pnpm && \
-    yes | pnpm -v && \
-    # 安装chromium
-    yes | npx @puppeteer/browsers install chrome@stable
+    yes | pnpm -v
 
 # 安装fish
 RUN echo 'deb http://download.opensuse.org/repositories/shells:/fish:/release:/3/Debian_12/ /' | tee /etc/apt/sources.list.d/shells:fish:release:3.list && \
