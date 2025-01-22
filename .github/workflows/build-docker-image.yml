@@ -2,6 +2,10 @@ name: 🛠️ 构建云崽Docker镜像
 
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - yz
+
 
 jobs:
   build:
@@ -15,12 +19,12 @@ jobs:
         run: |
           cd yunzai-docker-image
           docker build -t yunzai-bot:latest .
-          
+
       - name: 导出 Docker 镜像 (Export Docker image)
         run: |
           mkdir -p artifacts
           docker save yunzai-bot:latest > artifacts/yunzai-bot.tar
-          
+
       - name: 上传 Docker 镜像 (Upload Docker image artifact)
         uses: actions/upload-artifact@v4
         with:
