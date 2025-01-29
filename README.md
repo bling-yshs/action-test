@@ -417,3 +417,36 @@ acition-test
   run: echo "The time was ${{ steps.get-time.outputs.now }}"
 ```
 
+#### 发布 Release
+
+```yaml
+  - name: 上传编译结果到 Release (Upload build result to Release)
+    uses: ncipollo/release-action@v1
+    with:
+      token: ${{ secrets.GITHUB_TOKEN }}
+      name: 25.1.29
+      tag: 25.1.29
+      artifacts: |
+        ./README.md
+```
+tag 会自己创建，不需要手动创建
+
+#### Artifacts 取消嵌套
+
+```yaml
+  - name: 合并构建产物 (Merge artifacts)
+    uses: actions/upload-artifact/merge@v4
+    with:
+      name: merged-artifacts
+```
+或者
+```yaml
+
+  - name: 下载 Artifact (Download Artifact)
+    uses: actions/download-artifact@v4
+    with:
+      path: ./download
+      name: merged-artifacts
+      merge-multiple: true
+
+```
