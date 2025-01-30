@@ -14,7 +14,9 @@ jobs:
         with:
           releaseId: ${{ github.event.release.id }}
           out-file-path: download
+          fileName: '*.jar'
 
+      - run: echo ${{ github.event.release.id }}
 
       - name: 开启 SSH 服务 (Start SSH service)
         uses: lhotari/action-upterm@v1
