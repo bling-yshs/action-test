@@ -16,6 +16,7 @@ def parse_filename(filename):
         loader = parts[1].lower()
         mc_version = parts[2]
         return {
+            "name": filename.stem,
             "file": filename.name,
             "loader": "neoforge" if loader == "neoforge" else loader,
             "mc_version": mc_version,

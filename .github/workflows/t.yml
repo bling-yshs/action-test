@@ -29,16 +29,18 @@ jobs:
     strategy:
       matrix: ${{ fromJson(needs.setup.outputs.matrix) }}
     steps:
-      - run: echo ${{ matrix }}
+      - run: echo ${{toJson(matrix)}}
       - run: echo ${{ matrix.file }}
 #      - name: Checkout repository
-#        uses: actions/checkout@v4
-#      - uses: robinraju/release-downloader@v1
-#        with:
-#          releaseId: ${{ github.event.release.id }}
-#          out-file-path: release_assets
-#          fileName: '*.jar'
-#      - name: 开启 SSH 服务 (Start SSH service)
-#        uses: lhotari/action-upterm@v1
-#        with:
-#          wait-timeout-minutes: 20
+      - name: Debug Variables
+        run: |
+          echo "MODRINTH_TOKEN: [REDACTED]"
+          echo "file_path: ./release_assets/${{ matrix.file }}"
+          echo "name: ${{ matrix.name }}"
+          echo "version: ${{ github.event.release.tag_name }}"
+          echo "changelog: ${{ github.event.release.body }}"
+          echo "game_versions: ${{ matrix.game_versions }}"
+          echo "release_type: release"
+          echo "loaders: ${{ matrix.loader }}"
+          echo "featured: true"
+          echo "project_id: cPF7RWdR"
