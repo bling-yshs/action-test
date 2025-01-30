@@ -1,24 +1,44 @@
 name: 🚀 发布正式版 (Release)
+
 on:
-  release:
-    types: [ released ]
+  push:
 
 jobs:
-  upload-to-modrinth:
+  setup:
     runs-on: ubuntu-22.04
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-
-      - uses: robinraju/release-downloader@v1
+      - name: Set up Python
+        uses: actions/setup-python@v5
         with:
-          releaseId: ${{ github.event.release.id }}
-          out-file-path: download
-          fileName: '*.jar'
+          python-version: '3.13'
+      - name: Install dependencies
+        run: pip install requests
+      - name: Generate matrix
+        id: set-matrix
+        run: |
+          output=$(python .github/scripts/upload_modrinth.py)
+          echo "matrix=$output" >> $GITHUB_OUTPUT
 
-      - run: echo ${{ github.event.release.id }}
-
-      - name: 开启 SSH 服务 (Start SSH service)
-        uses: lhotari/action-upterm@v1
-        with:
-          wait-timeout-minutes: 20
+  upload-to-modrinth:
+    needs: setup
+    runs-on: ubuntu-22.04
+    strategy:
+      matrix: ${{ fromJson(needs.setup.outputs.matrix) }}
+    steps:
+      - run: echo ${{ matrix }}
+      - run: echo ${{ matrix.file }}
+#      - name: Checkout repository
+#        uses: actions/checkout@v4
+#      - uses: robinraju/release-downloader@v1
+#        with:
+#          releaseId: ${{ github.event.release.id }}
+#          out-file-path: release_assets
+#          fileName: '*.jar'
+#      - name: 开启 SSH 服务 (Start SSH service)
+#        uses: lhotari/action-upterm@v1
+#        with:
+#          wait-timeout-minutes: 20
