@@ -29,9 +29,6 @@ jobs:
     strategy:
       matrix: ${{ fromJson(needs.setup.outputs.matrix) }}
     steps:
-      - run: echo ${{toJson(matrix)}}
-      - run: echo ${{ matrix.file }}
-#      - name: Checkout repository
       - name: Debug Variables
         run: |
           echo "MODRINTH_TOKEN: [REDACTED]"
