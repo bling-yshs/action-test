@@ -1,6 +1,8 @@
 name: 🚀 发布正式版 (Release)
 
 on:
+  workflow_dispatch:
+
   release:
     types: [ released ]
 
