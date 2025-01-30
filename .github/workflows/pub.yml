@@ -1,0 +1,7 @@
+on:
+  release:
+    types: [ published ]
+
+jobs:
+  setup:
+    runs-on: ubuntu-22.04
