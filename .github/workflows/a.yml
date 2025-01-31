@@ -28,4 +28,18 @@ jobs:
         run: |
           latest_version=$(curl -s https://api.github.com/repos/${{ github.repository }}/releases/latest | jq -r .tag_name)
           echo "latest_version=$latest_version" >> $GITHUB_ENV
-      - run: echo $latest_version
+      - run: | 
+          echo $latest_version
+          echo 
+
+
+      - name: 获取 Release 正文 (Get Release Body)
+        id: get-release-body
+        run: |
+          release_body=$(curl -s "https://api.github.com/repos/${{ github.repository }}/releases/tags/v${{ github.event.inputs.version }}" | jq -r .body)
+          echo "release_body<<EOF" >> $GITHUB_ENV
+          echo "$release_body" >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
+
+      - run: |
+          echo $release_body
