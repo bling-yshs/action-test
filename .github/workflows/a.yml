@@ -1,8 +1,13 @@
 name: 🚀 发布正式版 (Release)
 
 on:
-  release:
-    types: [ edited, released ]
+  push:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: '输入要发布的版本号'
+        required: true
+        type: string
 
 jobs:
   setup:
@@ -10,11 +15,17 @@ jobs:
     outputs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}
     steps:
-      - name: Checkout repository
+      - name: 克隆当前仓库 (Clone current repo)
         uses: actions/checkout@v4
 
-      - name: Install jq
-        run: sudo apt-get install -y jq
+      - name: 安装 Python (Set up Python)
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
 
-      - name: Print and format GitHub context
-        run: echo '${{ toJSON(github.event.release) }}' | jq '.'
+      - name: Get latest release version
+        id: get-latest-release
+        run: |
+          latest_version=$(curl -s https://api.github.com/repos/${{ github.repository }}/releases/latest | jq -r .tag_name)
+          echo "latest_version=$latest_version" >> $GITHUB_ENV
+          echo "Latest release version: $latest_version"
