@@ -1,0 +1,421 @@
+{
+  "self_id": 2697585870,
+  "user_id": 377178599,
+  "time": 1742128373,
+  "message_id": 2061004843,
+  "message_seq": 2061004843,
+  "real_id": 2061004843,
+  "real_seq": "17463",
+  "message_type": "group",
+  "sender": {
+    "user_id": 377178599,
+    "nickname": "坏坏闪awa",
+    "card": "坏坏闪",
+    "role": "owner"
+  },
+  "raw_message": "[CQ:reply,id=1628847807]#取",
+  "font": 14,
+  "sub_type": "normal",
+  "message": [
+    {
+      "id": "1628847807",
+      "type": "reply"
+    },
+    {
+      "text": "#取",
+      "type": "text"
+    }
+  ],
+  "message_format": "array",
+  "post_type": "message",
+  "group_id": 226144628,
+  "raw": "{\"self_id\":2697585870,\"user_id\":377178599,\"time\":1742128373,\"message_id\":2061004843,\"message_seq\":2061004843,\"real_id\":2061004843,\"real_seq\":\"17463\",\"message_type\":\"group\",\"sender\":{\"user_id\":377178599,\"nickname\":\"坏坏闪awa\",\"card\":\"坏坏闪\",\"role\":\"owner\"},\"raw_message\":\"[CQ:reply,id=1628847807]#取\",\"font\":14,\"sub_type\":\"normal\",\"message\":[{\"type\":\"reply\",\"data\":{\"id\":\"1628847807\"}},{\"type\":\"text\",\"data\":{\"text\":\"#取\"}}],\"message_format\":\"array\",\"post_type\":\"message\",\"group_id\":226144628}",
+  "bot": {
+    "adapter": {
+      "id": "QQ",
+      "name": "OneBotv11",
+      "path": "OneBotv11",
+      "echo": {},
+      "timeout": 60000
+    },
+    "ws": {
+      "_events": {
+        "close": [
+          null,
+          null
+        ],
+        "message": [
+          null,
+          null
+        ]
+      },
+      "_eventsCount": 3,
+      "_binaryType": "nodebuffer",
+      "_closeCode": 1006,
+      "_closeFrameReceived": false,
+      "_closeFrameSent": false,
+      "_closeMessage": {
+        "type": "Buffer",
+        "data": []
+      },
+      "_closeTimer": null,
+      "_errorEmitted": false,
+      "_extensions": {},
+      "_paused": false,
+      "_protocol": "",
+      "_readyState": 1,
+      "_receiver": {
+        "_events": {},
+        "_writableState": {
+          "highWaterMark": 65536,
+          "length": 0,
+          "corked": 0,
+          "writelen": 0,
+          "bufferedIndex": 0,
+          "pendingcb": 0
+        },
+        "_allowSynchronousEvents": true,
+        "_binaryType": "nodebuffer",
+        "_extensions": "~bot~ws~_extensions",
+        "_isServer": true,
+        "_maxPayload": 104857600,
+        "_skipUTF8Validation": false,
+        "_bufferedBytes": 0,
+        "_buffers": [],
+        "_compressed": false,
+        "_payloadLength": 501,
+        "_mask": {
+          "type": "Buffer",
+          "data": [
+            162,
+            11,
+            16,
+            43
+          ]
+        },
+        "_fragmented": 0,
+        "_masked": true,
+        "_fin": true,
+        "_opcode": 1,
+        "_totalPayloadLength": 0,
+        "_messageLength": 0,
+        "_fragments": [],
+        "_errored": false,
+        "_loop": false,
+        "_state": 0,
+        "_eventsCount": 6
+      },
+      "_sender": {
+        "_extensions": "~bot~ws~_extensions",
+        "_socket": {
+          "connecting": false,
+          "_hadError": false,
+          "_parent": null,
+          "_host": null,
+          "_closeAfterHandlingError": false,
+          "_events": {
+            "end": [
+              null,
+              null
+            ]
+          },
+          "_readableState": {
+            "highWaterMark": 65536,
+            "buffer": [],
+            "bufferIndex": 0,
+            "length": 0,
+            "pipes": [],
+            "awaitDrainWriters": null
+          },
+          "_writableState": {
+            "highWaterMark": 65536,
+            "length": 0,
+            "corked": 0,
+            "writelen": 0,
+            "bufferedIndex": 0,
+            "pendingcb": 0
+          },
+          "allowHalfOpen": true,
+          "_eventsCount": 4,
+          "_sockname": null,
+          "_pendingData": null,
+          "_pendingEncoding": "",
+          "server": {
+            "requestTimeout": 300000,
+            "headersTimeout": 60000,
+            "keepAliveTimeout": 5000,
+            "connectionsCheckingInterval": 30000,
+            "requireHostHeader": true,
+            "rejectNonStandardBodyWrites": false,
+            "_events": {},
+            "_eventsCount": 5,
+            "_connections": 1,
+            "_handle": {
+              "reading": false
+            },
+            "_usingWorkers": false,
+            "_workers": [],
+            "_unref": false,
+            "_listeningId": 2,
+            "allowHalfOpen": true,
+            "pauseOnConnect": false,
+            "noDelay": true,
+            "keepAlive": false,
+            "keepAliveInitialDelay": 0,
+            "highWaterMark": 65536,
+            "httpAllowHalfOpen": false,
+            "timeout": 0,
+            "maxHeadersCount": null,
+            "maxRequestsPerSocket": 0,
+            "_connectionKey": "6::::2536"
+          },
+          "_server": "~bot~ws~_sender~_socket~server",
+          "parser": null,
+          "_paused": false,
+          "_peername": {
+            "address": "::ffff:127.0.0.1",
+            "family": "IPv6",
+            "port": 54464
+          },
+          "timeout": 0
+        },
+        "_firstFragment": true,
+        "_compress": false,
+        "_bufferedBytes": 0,
+        "_queue": [],
+        "_state": 0
+      },
+      "_socket": "~bot~ws~_sender~_socket",
+      "_autoPong": true,
+      "_isServer": true
+    },
+    "stat": {
+      "start_time": 1742128348,
+      "stat": {},
+      "online": true,
+      "good": true
+    },
+    "model": "TRSS Yunzai ",
+    "info": {
+      "user_id": 2697585870,
+      "nickname": "aua"
+    },
+    "uin": 2697585870,
+    "nickname": "aua",
+    "avatar": "https://q.qlogo.cn/g?b=qq&s=0&nk=2697585870",
+    "fl": {},
+    "gl": {},
+    "gml": {},
+    "request_list": [],
+    "cookies": {
+      "qun.qq.com": "pt2gguin=o2697585870; uin=o2697585870; skey=@quVwOlVy2; pt_recent_uins=711557e8fcab36fda47f9a4b40850568e075ee27b125b2495f182392600162c78b4093d3e58b9f03554774cfddd850c4dc8a26eb6c8095b8; RK=NR3Yf4+L0+; ptnick_2697585870=617561; ptcz=0d5f725ede46427ba104b8efd177164d85894004d01466065e58097b6fa11e94; p_uin=o2697585870; pt4_token=ZYCmwUiw8A2JOixGsUGsdnCp-Pn0bzqZ1BzcWFzeXqc_; p_skey=tflno5wG6h6sLLvaSP3qNku*bcFO1ndjIwgm3CS-iVU_; tgw_l7_route=7e15d4557dccd4a596bbe3b65b961917",
+      "aq.qq.com": "uin=o2697585870; skey=@quVwOlVy2; pt2gguin=o2697585870; pt_recent_uins=3b2de3d13487c04dc860e9c49e8972b3e7018f2015092c515ec2d6c8ee54b12a3188b4e2b6e904d582fc13aa765c74f97e71c4c72cd825fd; RK=NR3Yf4+L0+; ptnick_2697585870=617561; ptcz=e3eaa5629ffd0eac282c952056d6ecf6d956f0302c9bf93ab3ae8addf1fb0075",
+      "connect.qq.com": "pt2gguin=o2697585870; uin=o2697585870; skey=@quVwOlVy2; pt_recent_uins=e82d7cf3fa5278df82858403de95fed2558d8bff24e13cf80733b00d81f601125ec54399e830384fcfaef129f113fddfa281ac07e28294ff; RK=NR3Yf4+L0+; ptnick_2697585870=617561; ptcz=44c0094f97b8ca727678e7669bcc0b3f9ef70e78a1acf5d9c2d96480e4f7a4a8; p_uin=o2697585870; pt4_token=hPi8brVKtJQGYYOGjPV4C-97VpvgO8LGfy*0IMSBQxo_; p_skey=zuYe5zapdREz3FqC1imr*yMybnBITq-QtWapplULll8_; tgw_l7_route=2e242df07f798d9ee2b2391481c003fc",
+      "docs.qq.com": "fingerprint=10531c54441d483f85915d494054d35a89; TOK=dd1da7df8c83b007; p_skey=PbO0lGoq8CpY3N7GPKOoCrM-DM5JLWF0jsWPLyqhUYQ_",
+      "game.qq.com": "uin=o2697585870; skey=@quVwOlVy2; pt2gguin=o2697585870; pt_recent_uins=e43ea91980b5d8d6fc46ced5465cfce9da039865397bed1e80d5325577253078c11a85804303ae28c3c4f589b70db6e67d5f3b42dbe0e24e; RK=NR3Yf4+L0+; ptnick_2697585870=617561; ptcz=a26abc764bf3c9818c9c70ce6cfed46fa885a6afeb32084ab8c7f3a6ca236329",
+      "gamecenter.qq.com": "uin=o2697585870; skey=@quVwOlVy2; pt2gguin=o2697585870; pt_recent_uins=4f34ddd82a23f23c208a65468b87093b43a7055bc281f70d767e20d6dc12684c3c172aae1c85be1987e7e123c58cac8fb4ef0ec10d226003; RK=NR3Yf4+L0+; ptnick_2697585870=617561; ptcz=003d5ea4b26b76b048d6b857aee5449dd4c53e46c6dffc7c9760a5e769b51194; tgw_l7_route=d5c7ef9a35d257a434a547862e0638eb; p_skey=r0O0BqISL7V8s4Frw5VTdBlbf-*HyNI0YiyToA6AWHA_",
+      "haoma.qq.com": "uin=o2697585870; skey=@quVwOlVy2; pt2gguin=o2697585870; pt_recent_uins=6fa34fd1c16bdf8996aae3971b79556ccedd543a49a21b92750e0d55d0d6b696ae670f2883c05eadebc629d589095b7df606f38e2320e9dc; RK=NR3Yf4+L0+; ptnick_2697585870=617561; ptcz=dc06aed5c710cc02f6be800f44b12c7f6b28cff7d66b40dc2f307d2e683ecbbf",
+      "id.qq.com": "pt2gguin=o2697585870; uin=o2697585870; skey=@quVwOlVy2; pt_recent_uins=f87dc17a6731a16a87b7f413d126325542c0a6dac8a865f63018986298bafde56e4522e6eaa1d8641dad4c398aa13b36165ce3c627144363; RK=NR3Yf4+L0+; ptnick_2697585870=617561; ptcz=988bc8f0f03643db08adb59f5311fd87f65ba8d96e7298719c215d81bf6042e1; p_uin=o2697585870; pt4_token=347mEgzTg*wrrA21OvhpPC17WYIuWmuc6*vaH7JqstI_; p_skey=YHUdlaNhu2WIM4XwP6e14DY6qEdHBsp4e5bXu5GEyoA_",
+      "kg.qq.com": "pt2gguin=o2697585870; uin=o2697585870; skey=@quVwOlVy2; pt_recent_uins=730d330f7bd5e7b37c5ee6018b4d4103d565865c394400b1e0400324966e9553d7ef9ab146b89fe68d5ab164a4f6ee6f8b41966955c4fc5f; RK=NR3Yf4+L0+; ptnick_2697585870=617561; ptcz=aa7dfdd0b5a43b5896881f901c68a2ebd3fd508bf14b9adeb2401487bb3983c1; p_uin=o2697585870; pt4_token=3OqyT4H2PN0Fbc47i2HAp08e5Wjr0R2yXq2Xk1zOrVM_; p_skey=3kQ7IrW0XGxxBICDX0J0rxeG6pRXYBbxL-dQz2z1tXE_",
+      "mail.qq.com": "pt2gguin=o2697585870; uin=o2697585870; skey=@quVwOlVy2; pt_recent_uins=8c2a4dc9bddac30f6cf7fd443c21f0323ac4a2843747ae4f0055ab568f310872a6ab7fb15a59ea49d240129c2d913cc5706999a7e7ad781c; RK=NR3Yf4+L0+; ptnick_2697585870=617561; ptcz=a319cefc36fdbd1a3e4241128e1b98942ffca3c6b1d4cb437ccd2e61855a7a69; p_uin=o2697585870; pt4_token=n0MwSCysLRz*u7p-T*tOVgJbeL6JQ6JHAn19staXaK0_; p_skey=773IIpPlmbtpJyzLCvIbzCeEtkLUZG-xevJt-SWR*Ek_",
+      "mma.qq.com": "pt2gguin=o2697585870; uin=o2697585870; skey=@quVwOlVy2; pt_recent_uins=c09225fc3995d08c17cbe1d808860607a0c201a7d3b3bba8593d283b9ecb3313d2d5b00077aad6b34982ce9daa3dba27ad149ec8695dba7b; RK=NR3Yf4+L0+; ptnick_2697585870=617561; ptcz=a6acb369fa047c037ecbe16e256599ca4d1248575aa242a44f32f9f980fbcc1a; p_uin=o2697585870; pt4_token=yM0zRTewdv3vlgGyheDJw8zhtObWWsTnZyiTDj0fnIE_; p_skey=p9h5OjKr0SA9EzgHmfjjpkgG*hHbe83hq3Hi4KvJucU_",
+      "office.qq.com": "",
+      "openmobile.qq.com": "uin=o2697585870; skey=@quVwOlVy2; pt2gguin=o2697585870; pt_recent_uins=5136c855113f122eeab094cdb86323c4f9d0a66d27f9f4e3a14f4fc51ec9d3555b52411dfa859659990ad09e397644c45b9ade6a52b4109a; RK=NR3Yf4+L0+; ptnick_2697585870=617561; ptcz=57a5a0dd9e477b08b96a0f20e4dd52245d813acb9093d9e6901b3d179aac30ec",
+      "qqweb.qq.com": "uin=o2697585870; skey=@quVwOlVy2; pt2gguin=o2697585870; pt_recent_uins=fc4cf73e4c4a4370114209d8fa9b4ffa5089d71afba62eca99515739c43d24d8918a289d5a623390ff3f0d160fd9f432ea26972677ff3c49; RK=NR3Yf4+L0+; ptnick_2697585870=617561; ptcz=a64b659ec26fad531bc8d193aa429860cacef4ed442dcc214353b7eabaf35ab3; tgw_l7_route=5f25049d7d739203caae7f229257c97c",
+      "qzone.qq.com": "pt2gguin=o2697585870; uin=o2697585870; skey=@quVwOlVy2; pt_recent_uins=9d3921dad1d4348b6283af4c6a6894a5c9bcc6c740d9bc42b15ea9ae7a6824bf9c7aeeee7f1e628c6a25f1f0f62424870c1d0e8383c524e8; RK=NR3Yf4+L0+; ptnick_2697585870=617561; ptcz=c266ef3c65ee98888f4f65df07ff7bda4164c37192fe28b43431c5d9aa05dcd5; p_uin=o2697585870; pt4_token=JhOe40PZavMHsUtKLswPbcJrbAMcsFbY-8sSF6I1t7A_; p_skey=HyoRnRKkrQWfggeQyu2cRnXzINmuEw8NrtR0U53aCuQ_",
+      "ti.qq.com": "pt2gguin=o2697585870; uin=o2697585870; skey=@quVwOlVy2; pt_recent_uins=fb3a107aa0fd9b2ba03ee8dfe21b2dcd35c58e0e628f6ff809247b8dc8185e8fe363ec4da0100b18de77af817d5057899e266a5a4239018c; RK=NR3Yf4+L0+; ptnick_2697585870=617561; ptcz=4513a4662bed1b19ed6b3ce78fc706dccdb140d1e2381a8286e07e128d7df7cc; p_uin=o2697585870; pt4_token=JT*Y9wo1ABzq78D1b53KF2LXML8*21hwKyRfZnCXk44_; p_skey=9q6gnpQl9uQl6JkiLiQ-5PhT*QpwIjf4VqTY8n3JxqE_",
+      "v.qq.com": "",
+      "vip.qq.com": "uin=o2697585870; skey=@quVwOlVy2; pt2gguin=o2697585870; pt_recent_uins=2c37727f177deab85996ebab0fc88736c5b7a13904ff6d93d30c185152241acc7e7aaa0c450b4a755f8e3111ef984077e3a46a952a9c9709; RK=NR3Yf4+L0+; ptnick_2697585870=617561; ptcz=38f5f79684597d1f726192e70f185a38dd22bc87aade9cc648634ecd903c1d71; p_skey=fttEG1JtxQD5Cv6iCQqQxWhfVW9VGS11q*WRJOZYIoI_",
+      "y.qq.com": ""
+    },
+    "version": {
+      "app_name": "NapCat.Onebot",
+      "protocol_version": "v11",
+      "app_version": "4.7.0",
+      "id": "QQ",
+      "name": "OneBotv11",
+      "version": "NapCat.Onebot v4.7.0"
+    },
+    "bkn": 349103572
+  },
+  "group_name": "测试",
+  "adapter_id": "QQ",
+  "adapter_name": "OneBotv11",
+  "reply_id": "1628847807",
+  "msg": "#取",
+  "logText":"[36m[测试(226144628), 坏坏闪(377178599)][39m[31m[#取][39m",
+  "isGroup": true,
+  "isMaster": true,
+  "runtime": {
+    "e": "~",
+    "_mysInfo": {},
+    "handler": {}
+  },
+  "user": {
+    "_uuid": "user:377178599",
+    "qq": 377178599,
+    "db": {
+      "games": {
+        "gs": {
+          "uid": "167877774",
+          "data": {
+            "167877774": {
+              "uid": "167877774",
+              "type": "reg"
+            }
+          }
+        },
+        "sr": {
+          "uid": "101628002",
+          "data": {
+            "100004100": {
+              "uid": "100004100",
+              "type": "reg"
+            },
+            "100985109": {
+              "uid": "100985109",
+              "type": "reg"
+            },
+            "101628002": {
+              "uid": "101628002",
+              "type": "reg"
+            },
+            "101866179": {
+              "uid": "101866179",
+              "type": "reg"
+            }
+          }
+        },
+        "zzz": {
+          "uid": "10087335",
+          "data": {
+            "10087335": {
+              "uid": "10087335",
+              "type": "reg"
+            }
+          }
+        }
+      },
+      "id": "377178599",
+      "type": "qq",
+      "name": null,
+      "face": null,
+      "ltuids": "272606920,380480498",
+      "data": null,
+      "createdAt": "2023-11-06T11:19:45.694Z",
+      "updatedAt": "2025-01-19T17:28:24.755Z"
+    },
+    "mysUsers": {
+      "272606920": {
+        "_uuid": "mys:272606920",
+        "ltuid": "272606920",
+        "db": {
+          "uids": {
+            "gs": [
+              "167877774"
+            ],
+            "sr": [
+              "139661953"
+            ],
+            "zzz": []
+          },
+          "ltuid": 272606920,
+          "type": "mys",
+          "ck": "ltoken=wxQsZS9kZmGCNpDahY9bHNQqeubWr4f0slzXNrCp;ltuid=272606920;cookie_token=XkhgdE1XKHD3yGVN320ylqb80MOsILZZNHc4DWgl; account_id=272606920;",
+          "device": "6167f444-4986-0e55-ca01-318e91c518aa",
+          "createdAt": "2025-01-27T13:38:48.636Z",
+          "updatedAt": "2025-01-27T13:38:48.636Z"
+        },
+        "ck": "ltoken=wxQsZS9kZmGCNpDahY9bHNQqeubWr4f0slzXNrCp;ltuid=272606920;cookie_token=XkhgdE1XKHD3yGVN320ylqb80MOsILZZNHc4DWgl; account_id=272606920;",
+        "type": "mys",
+        "device": "6167f444-4986-0e55-ca01-318e91c518aa",
+        "uids": {
+          "gs": [
+            "167877774"
+          ],
+          "sr": [
+            "139661953"
+          ],
+          "zzz": []
+        }
+      },
+      "380480498": {
+        "_uuid": "mys:380480498",
+        "ltuid": "380480498",
+        "db": {
+          "uids": {
+            "gs": [],
+            "sr": [
+              "101866179"
+            ],
+            "zzz": [
+              "10087335"
+            ]
+          },
+          "ltuid": 380480498,
+          "type": "mys",
+          "ck": "ltoken=v2_pAHRw8JoVPJSTW9DxNWQD4tltyo7Xf44c3y0x3VuzFZZt5IGYSwIERjeFJ9cCm_5jBBR3Tb_6FzN6ExmfSf9SncFamtyLj4uJviam4a0960RmERAm7mM0cY4d9-_E-NtbcZDfLc6N84=.CAE=;ltuid=380480498;cookie_token=BwQ5Hnn4MErB8KIpyoGLNUzoXdnn11L8DZLcRRrv; account_id=380480498;",
+          "device": "24a6b60f-b8ff-c7be-5986-7321487139a7",
+          "createdAt": "2024-08-24T04:37:20.061Z",
+          "updatedAt": "2024-08-24T04:37:20.061Z"
+        },
+        "ck": "ltoken=v2_pAHRw8JoVPJSTW9DxNWQD4tltyo7Xf44c3y0x3VuzFZZt5IGYSwIERjeFJ9cCm_5jBBR3Tb_6FzN6ExmfSf9SncFamtyLj4uJviam4a0960RmERAm7mM0cY4d9-_E-NtbcZDfLc6N84=.CAE=;ltuid=380480498;cookie_token=BwQ5Hnn4MErB8KIpyoGLNUzoXdnn11L8DZLcRRrv; account_id=380480498;",
+        "type": "mys",
+        "device": "24a6b60f-b8ff-c7be-5986-7321487139a7",
+        "uids": {
+          "gs": [],
+          "sr": [
+            "101866179"
+          ],
+          "zzz": [
+            "10087335"
+          ]
+        }
+      }
+    },
+    "_games": {
+      "gs": {
+        "uid": "167877774",
+        "data": {
+          "167877774": {
+            "uid": "167877774",
+            "type": "reg"
+          }
+        }
+      },
+      "sr": {
+        "uid": "101628002",
+        "data": {
+          "100004100": {
+            "uid": "100004100",
+            "type": "reg"
+          },
+          "100985109": {
+            "uid": "100985109",
+            "type": "reg"
+          },
+          "101628002": {
+            "uid": "101628002",
+            "type": "reg"
+          },
+          "101866179": {
+            "uid": "101866179",
+            "type": "reg"
+          }
+        }
+      },
+      "zzz": {
+        "uid": "10087335",
+        "data": {
+          "10087335": {
+            "uid": "10087335",
+            "type": "reg"
+          }
+        }
+      }
+    }
+  },
+  "original_msg": "#取",
+  "game": "gs",
+  "logFnc":"[34m[ys-pick(pick)][39m"
+}

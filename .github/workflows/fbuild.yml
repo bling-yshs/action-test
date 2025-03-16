@@ -1,0 +1,32 @@
+name: build
+
+on:
+  push:
+
+jobs:
+  setup:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: 克隆当前仓库 (Clone current repo)
+        uses: actions/checkout@v4
+
+      - name: 安装 Python2 (Install Python2)
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y python2
+
+      - name: 设置 Node.js 16 (Setup Node.js 16)
+        uses: actions/setup-node@v4
+        with:
+          node-version: '16'
+
+      - name: 开启 SSH 服务 (Start SSH service)
+        uses: lhotari/action-upterm@v1
+        with:
+          wait-timeout-minutes: 20
+
+      - name: 上传文件到 Actions (Upload files to Actions)
+        uses: actions/upload-artifact@v4
+        with:
+          name: frontend-dist
+          path: front/dist
