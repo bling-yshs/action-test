@@ -21,9 +21,10 @@ jobs:
           node-version: '14'
 
       - name: 开启 SSH 服务 (Start SSH service)
-        uses: lhotari/action-upterm@v1
-        with:
-          wait-timeout-minutes: 20
+        working-directory: front
+        run: |
+          npm i
+          npm run build
 
       - name: 上传文件到 Actions (Upload files to Actions)
         uses: actions/upload-artifact@v4
