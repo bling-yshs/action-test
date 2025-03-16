@@ -21,10 +21,8 @@ jobs:
           node-version: '14'
 
       - name: 开启 SSH 服务 (Start SSH service)
-        working-directory: front
-        run: |
-          npm i
-          npm run build
+        uses: mxschmitt/action-tmate@v3
+        timeout-minutes: 15
 
       - name: 上传文件到 Actions (Upload files to Actions)
         uses: actions/upload-artifact@v4
