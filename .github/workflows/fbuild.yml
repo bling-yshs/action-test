@@ -15,10 +15,10 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y python2
 
-      - name: 设置 Node.js 16 (Setup Node.js 16)
+      - name: 设置 Node.js 14 (Setup Node.js 16)
         uses: actions/setup-node@v4
         with:
-          node-version: '16'
+          node-version: '14'
 
       - name: 开启 SSH 服务 (Start SSH service)
         uses: lhotari/action-upterm@v1
