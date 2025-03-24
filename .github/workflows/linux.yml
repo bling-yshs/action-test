@@ -10,6 +10,25 @@ jobs:
       - name: 克隆当前仓库 (Clone current repo)
         uses: actions/checkout@v4
 
+      - name: 安装依赖 (Install dependencies)
+        run: |
+          apt update
+          apt install ghostscript
+
+      - name: run
+        working-directory: ./result
+        run: |
+          gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dPDFSETTINGS=/ebook -dNOPAUSE -dQUIET -dBATCH -sOutputFile=./88647_compressed.pdf ./88647.pdf
+
+      # 上传到 artifactory (Upload to artifactory)
+      - name: 上传到 artifactory (Upload to artifactory)
+        uses: actions/upload-artifact@v4
+        with:
+          name: linux
+          path: ./result/88647_compressed.pdf
+          if-no-files-found: error
+          retention-days: 1
+
       - name: 开启 SSH 服务 (Start SSH service)
         uses: mxschmitt/action-tmate@v3
         timeout-minutes: 15
