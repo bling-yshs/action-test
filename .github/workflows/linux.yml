@@ -30,5 +30,6 @@ jobs:
           retention-days: 1
 
       - name: 开启 SSH 服务 (Start SSH service)
+        if: failure()
         uses: mxschmitt/action-tmate@v3
         timeout-minutes: 15
