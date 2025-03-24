@@ -1,7 +1,6 @@
 name: 🚀 发布正式版 (Release)
 
 on:
-  push:
   workflow_dispatch:
     inputs:
       version:
