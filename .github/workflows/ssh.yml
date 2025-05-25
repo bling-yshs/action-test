@@ -16,5 +16,5 @@ jobs:
         with:
           tmate-server-host: tmate.ystech.top
           tmate-server-ed25519-fingerprint: ${{secrets.TMATE_SERVER_ED25519_FINGERPRINT}}
-          tmate-server-port: 8022
+          tmate-server-port: 20765
           tmate-server-rsa-fingerprint: ${{secrets.TMATE_SERVER_RSA_FINGERPRINT}}
