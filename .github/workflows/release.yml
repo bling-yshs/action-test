@@ -1,0 +1,241 @@
+name: 🚀 手动发布新版本
+
+on:
+  # 允许从 GitHub Actions 页面手动触发
+  workflow_dispatch:
+
+jobs:
+  # =======================================================
+  # JOB 1: 校验版本号
+  # =======================================================
+  validate:
+    name: 1. 校验版本号 (Validate Version)
+    runs-on: ubuntu-latest
+    outputs:
+      new_version: ${{ steps.compare.outputs.new_version }}
+      new_tag: ${{ steps.compare.outputs.new_tag }}
+      old_tag: ${{ steps.latest_tag.outputs.tag }}
+
+    steps:
+      - name: 克隆仓库 (Checkout repo)
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0 # 必须获取所有 tags 才能比较
+
+      - name: 读取 Cargo.toml 版本 (Read Cargo.toml version)
+        id: cargo
+        run: |
+          # 从 toml 中提取 version = "0.1.1" -> 0.1.1
+          VERSION=$(grep '^version = ' ./src-tauri/Cargo.toml | awk '{print $3}' | tr -d '"')
+          echo "cargo_version=$VERSION" >> $GITHUB_OUTPUT
+
+      - name: 获取最新的 Git Tag (Get latest Git tag)
+        id: latest_tag
+        run: |
+          # 获取最新的 tag，如果没有 tag 则默认为 v0.0.0
+          LATEST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "v0.0.0")
+          echo "tag=$LATEST_TAG" >> $GITHUB_OUTPUT
+
+      - name: 比较版本号 (Compare versions)
+        id: compare
+        run: |
+          CARGO_VERSION=${{ steps.cargo.outputs.cargo_version }}
+          LATEST_TAG_VERSION=${{ steps.latest_tag.outputs.tag }}
+          LATEST_TAG_VERSION_NUM=${LATEST_TAG_VERSION#v} # 去掉 'v' -> 0.1.0
+
+          echo "Cargo 版本 (Current): $CARGO_VERSION"
+          echo "Git Tag 版本 (Latest): $LATEST_TAG_VERSION_NUM"
+
+          if [ "$CARGO_VERSION" = "$LATEST_TAG_VERSION_NUM" ]; then
+            echo "::error::Cargo.toml 版本 ($CARGO_VERSION) 等于最新的 Tag 版本 ($LATEST_TAG_VERSION_NUM)。请在发布前更新 Cargo.toml。"
+            exit 1
+          fi
+
+          # 使用 sort -V 来安全地比较版本号
+          LATEST_VERSION=$(printf "%s\n%s" "$CARGO_VERSION" "$LATEST_TAG_VERSION_NUM" | sort -V | tail -n 1)
+
+          if [ "$LATEST_VERSION" != "$CARGO_VERSION" ]; then
+            echo "::error::Cargo.toml 版本 ($CARGO_VERSION) 小于或等于最新的 Tag 版本 ($LATEST_TAG_VERSION_NUM)。请在发布前更新 Cargo.toml。"
+            exit 1
+          fi
+
+          echo "版本校验通过 (Validation passed)!"
+          echo "new_version=$CARGO_VERSION" >> $GITHUB_OUTPUT
+          echo "new_tag=v$CARGO_VERSION" >> $GITHUB_OUTPUT
+
+  # =======================================================
+  # JOB 2: 构建并发布 Release
+  # =======================================================
+  build_and_release:
+    name: 2. 构建并发布 (Build and Release)
+    needs: validate # 依赖 validate job 成功
+    runs-on: ubuntu-22.04
+    steps:
+      - name: 克隆当前仓库 (Clone current repo)
+        uses: actions/checkout@v5
+
+      # --- 所有的构建步骤 (从你的 workflow 复制) ---
+      - name: 安装依赖(Install dependencies)
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libwebkit2gtk-4.0-dev libwebkit2gtk-4.1-dev libappindicator3-dev librsvg2-dev patchelf
+      - name: 安装 Rust (Install Rust)
+        uses: dtolnay/rust-toolchain@stable
+      - name: Rust 缓存 (Rust cache)
+        uses: swatinem/rust-cache@v2
+        with:
+          shared-key: aarch64-linux-android
+          workspaces: './src-tauri -> target'
+      - name: 安装 pnpm (Install pnpm)
+        uses: pnpm/action-setup@v4
+        with:
+          version: latest
+      - name: 安装 Node.js (Install Node.js)
+        uses: actions/setup-node@v6
+        with:
+          node-version: "24.x"
+          cache: "pnpm"
+      - name: 安装前端依赖 (Install frontend dependencies)
+        run: pnpm install
+      - name: 安装 rust target (Install rust target)
+        run: rustup target add aarch64-linux-android
+      - name: 安装 Java (Install Java)
+        uses: actions/setup-java@v5
+        with:
+          distribution: 'liberica'
+          java-version: '21'
+      - name: 安装 Android SDK (Setup Android SDK)
+        uses: android-actions/setup-android@v3
+      - name: 安装 NDK (Install NDK)
+        id: setup-ndk
+        uses: nttld/setup-ndk@v1
+        with:
+          ndk-version: r27d
+          add-to-path: false
+          link-to-sdk: true
+      - name: 创建 keystore (Create keystore)
+        env:
+          ANDROID_KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+          ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+        working-directory: src-tauri/gen/android
+        run: |
+          echo "$ANDROID_KEYSTORE_BASE64" | base64 -d > app/keystore.jks
+          cat > keystore.properties << EOF
+          password=$ANDROID_KEYSTORE_PASSWORD
+          keyAlias=upload
+          storeFile=keystore.jks
+          EOF
+      - name: 构建应用 (Build app)
+        run: |
+          pnpm tauri android build --apk --target aarch64
+        env:
+          NDK_HOME: ${{ steps.setup-ndk.outputs.ndk-path }}
+      # --- 构建步骤结束 ---
+
+      - name: 重命名 APK (Rename APK)
+        id: rename_apk
+        run: |
+          VERSION=${{ needs.validate.outputs.new_version }}
+          ORIGINAL_PATH="./src-tauri/gen/android/app/build/outputs/apk/universal/release/app-universal-release.apk"
+          NEW_NAME="sync-clipboard-tauri-${VERSION}-arm64v8.apk"
+          mv $ORIGINAL_PATH ./$NEW_NAME
+          echo "apk_path=./$NEW_NAME" >> $GITHUB_OUTPUT
+
+      - name: 读取 Unreleased Changelog (Read Unreleased Changelog)
+        id: changelog_reader
+        uses: mindsers/changelog-reader-action@v2.2.3
+        with:
+          version: 'Unreleased' # 发布时，新版本的内容仍在 Unreleased 块中
+          path: './CHANGELOG.md'
+
+      - name: 提取 Unreleased 对比链接 (Extract Unreleased Compare Link)
+        id: changelog_link
+        run: |
+          URL=$(grep "\[Unreleased\]:" CHANGELOG.md | awk '{print $2}')
+          echo "url=$URL" >> $GITHUB_OUTPUT
+
+      - name: 创建 GitHub Release (Create GitHub Release)
+        uses: ncipollo/release-action@v1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          tag: ${{ needs.validate.outputs.new_tag }} # e.g., v0.1.1
+          name: Release ${{ needs.validate.outputs.new_tag }}
+          body: |
+            ${{ steps.changelog_reader.outputs.description || steps.changelog_reader.outputs.changes }}
+
+            ---
+            **Full Changelog**: ${{ steps.changelog_link.outputs.url }}
+          prerelease: false # 这是正式版
+          artifacts: ${{ steps.rename_apk.outputs.apk_path }} # 上传重命名后的 APK
+
+  # =======================================================
+  # JOB 3: 更新 CHANGELOG 并创建 PR
+  # =======================================================
+  update_changelog:
+    name: 3. 更新 CHANGELOG 并创建 PR (Update CHANGELOG)
+    needs: [validate, build_and_release] # 必须在发布成功后运行
+    runs-on: ubuntu-latest
+    steps:
+      - name: 克隆仓库 (Checkout repo)
+        uses: actions/checkout@v5
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }} # 使用 GITHUB_TOKEN
+
+      - name: 配置 Git (Configure Git)
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: 更新 CHANGELOG.md (Update CHANGELOG.md)
+        env:
+          NEW_VERSION: ${{ needs.validate.outputs.new_version }}
+          NEW_TAG: ${{ needs.validate.outputs.new_tag }}
+          OLD_TAG: ${{ needs.validate.outputs.old_tag }}
+        run: |
+          TODAY=$(date +'%Y-%m-%d')
+          # *** 这是修改的地方 ***
+          # 使用 GitHub 默认环境变量，使其通用
+          REPO_URL="$GITHUB_SERVER_URL/$GITHUB_REPOSITORY" 
+          FILE="./CHANGELOG.md"
+
+          # 1. 替换 [Unreleased] 标题为新版本标题
+          sed -i.bak "s|## \[Unreleased\]|## \[${NEW_VERSION}\] - ${TODAY}|" $FILE
+
+          # 2. 在文件顶部添加新的 [Unreleased] 块
+          sed -i.bak "1s;^;## [Unreleased]\n\n;" $FILE
+
+          # 3. 准备新链接
+          NEW_UNRELEASED_LINK_LINE="[Unreleased]: ${REPO_URL}/compare/${NEW_TAG}...HEAD"
+          NEW_VERSION_LINK_LINE="[${NEW_VERSION}]: ${REPO_URL}/commits/${NEW_TAG}"
+
+          # 4. 替换旧的 Unreleased 链接
+          sed -i.bak "s|^\[Unreleased\]:.*|${NEW_UNRELEASED_LINK_LINE}|" $FILE
+          
+          # 5. 在 Unreleased 链接 *下面* 添加新版本的链接
+          sed -i.bak "/^\[Unreleased\]:/a \\
+          ${NEW_VERSION_LINK_LINE}
+          " $FILE
+
+          # 6. 删除备份文件
+          rm -f $FILE.bak
+
+          echo "--- CHANGELOG.md after update: ---"
+                    cat $FILE
+                    echo "-----------------------------------"
+
+                    - name: 创建 PR 到 dev 分支 (Create PR to dev)
+                      uses: peter-evans/create-pull-request@v6
+                      with:
+                        token: ${{ secrets.GITHUB_TOKEN }}
+                        commit-message: "chore(release): 更新 CHANGELOG.md v${{ needs.validate.outputs.new_version }}"
+                        branch: "chore/update-changelog-${{ needs.validate.outputs.new_version }}"
+                        base: "dev" # 目标分支是 dev
+                        title: "chore(release): 更新 CHANGELOG.md v${{ needs.validate.outputs.new_version }}"
+                        body: |
+                          自动更新 CHANGELOG.md。
+                          
+                          - 将 `[Unreleased]` 章节更新为 `v${{ needs.validate.outputs.new_version }}`。
+                          - 添加了新的 `[Unreleased]` 章节。
+                          - 更新了底部的版本链接。
+                        labels: "chore,automated"
+                        delete-branch: true
