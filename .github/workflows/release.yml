@@ -171,20 +171,20 @@ jobs:
             cat $FILE
             echo "-----------------------------------"
           # --- 修正结束 ---
-          
-          - name: 创建 PR 到 dev 分支 (Create PR to dev)
-            uses: peter-evans/create-pull-request@v6
-            with:
-              token: ${{ secrets.GITHUB_TOKEN }}
-              commit-message: "chore(release): 更新 CHANGELOG.md v${{ needs.validate.outputs.new_version }}"
-              branch: "chore/update-changelog-${{ needs.validate.outputs.new_version }}"
-              base: "dev" # 目标分支是 dev
-              title: "chore(release): 更新 CHANGELOG.md v${{ needs.validate.outputs.new_version }}"
-              body: |
-                自动更新 CHANGELOG.md。
-                
-                - 将 `[Unreleased]` 章节更新为 `v${{ needs.validate.outputs.new_version }}`。
-                - 添加了新的 `[Unreleased]` 章节。
-                - 更新了底部的版本链接。
-              labels: "chore,automated"
-              delete-branch: true
+
+      - name: 创建 PR 到 dev 分支 (Create PR to dev)
+        uses: peter-evans/create-pull-request@v7
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: "chore(release): 更新 CHANGELOG.md v${{ needs.validate.outputs.new_version }}"
+          branch: "chore/update-changelog-${{ needs.validate.outputs.new_version }}"
+          base: "dev" # 目标分支是 dev
+          title: "chore(release): 更新 CHANGELOG.md v${{ needs.validate.outputs.new_version }}"
+          body: |
+            自动更新 CHANGELOG.md。
+            
+            - 将 `[Unreleased]` 章节更新为 `v${{ needs.validate.outputs.new_version }}`。
+            - 添加了新的 `[Unreleased]` 章节。
+            - 更新了底部的版本链接。
+          labels: "chore,automated"
+          delete-branch: true
