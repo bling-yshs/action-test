@@ -29,7 +29,6 @@ jobs:
           VERSION=$(grep '^version = ' ./src-tauri/Cargo.toml | awk '{print $3}' | tr -d '"')
           echo "cargo_version=$VERSION" >> $GITHUB_OUTPUT
 
-      # --- 这是被修改的步骤 ---
       - name: 获取最新的 Git Tag (Get latest Git tag)
         id: latest_tag
         run: |
@@ -41,7 +40,6 @@ jobs:
           LATEST_TAG=$(git tag | grep -E "^v[0-9]+\.[0-9]+\.[0-9]+$" | sort -V | tail -n 1 || echo "v0.0.0")
           echo "找到的最新的语义化版本 Tag: $LATEST_TAG"
           echo "tag=$LATEST_TAG" >> $GITHUB_OUTPUT
-      # --- 修改结束 ---
 
       - name: 比较版本号 (Compare versions)
         id: compare
@@ -121,7 +119,7 @@ jobs:
   # =======================================================
   update_changelog:
     name: 3. 更新 CHANGELOG 并创建 PR (Update CHANGELOG)
-    needs: [ validate, build_and_release ] # 必须在发布成功后运行
+    needs: [validate, build_and_release] # 必须在发布成功后运行
     runs-on: ubuntu-latest
     steps:
       - name: 克隆仓库 (Checkout repo)
@@ -134,6 +132,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
+      # --- 这是被修正的步骤 ---
       - name: 更新 CHANGELOG.md (Update CHANGELOG.md)
         env:
           NEW_VERSION: ${{ needs.validate.outputs.new_version }}
@@ -141,49 +140,51 @@ jobs:
           OLD_TAG: ${{ needs.validate.outputs.old_tag }}
         run: |
           TODAY=$(date +'%Y-%m-%d')
-          # *** 这是修改的地方 ***
-          # 使用 GitHub 默认环境变量，使其通用
           REPO_URL="$GITHUB_SERVER_URL/$GITHUB_REPOSITORY" 
           FILE="./CHANGELOG.md"
 
-          # 1. 替换 [Unreleased] 标题为新版本标题
-          sed -i.bak "s|## \[Unreleased\]|## \[${NEW_VERSION}\] - ${TODAY}|" $FILE
-
-          # 2. 在文件顶部添加新的 [Unreleased] 块
-          sed -i.bak "1s;^;## [Unreleased]\n\n;" $FILE
-
-          # 3. 准备新链接
+          # 1. 准备新链接
           NEW_UNRELEASED_LINK_LINE="[Unreleased]: ${REPO_URL}/compare/${NEW_TAG}...HEAD"
           NEW_VERSION_LINK_LINE="[${NEW_VERSION}]: ${REPO_URL}/commits/${NEW_TAG}"
 
-          # 4. 替换旧的 Unreleased 链接
-          sed -i.bak "s|^\[Unreleased\]:.*|${NEW_UNRELEASED_LINK_LINE}|" $FILE
+          # 2. 替换 [Unreleased] 标题为新版本标题
+          sed -i.bak "s|## \[Unreleased\]|## \[${NEW_VERSION}\] - ${TODAY}|" $FILE
+
+          # 3. 在文件主标题 (# ...) 下方添加新的 [Unreleased] 块
+          #    (修复：不在第1行插入，而是在标题行后插入)
+          sed -i.bak "/^# .*/a \\
+          \\
+          ## [Unreleased]
+          " $FILE
+        
+                  # 4. 替换旧的 Unreleased 链接
+                  sed -i.bak "s|^\[Unreleased\]:.*|${NEW_UNRELEASED_LINK_LINE}|" $FILE
           
           # 5. 在 Unreleased 链接 *下面* 添加新版本的链接
-          sed -i.bak "/^\[Unreleased\]:/a \\
-          ${NEW_VERSION_LINK_LINE}
-          " $FILE
-
+          #    (修复：确保多行 'a\' 命令的健壮性)
+          sed -i.bak "/^\[Unreleased\]:/a ${NEW_VERSION_LINK_LINE}" $FILE
+          
           # 6. 删除备份文件
           rm -f $FILE.bak
-
-          echo "--- CHANGELOG.md after update: ---"
-                    cat $FILE
-                    echo "-----------------------------------"
-
-                    - name: 创建 PR 到 dev 分支 (Create PR to dev)
-                      uses: peter-evans/create-pull-request@v6
-                      with:
-                        token: ${{ secrets.GITHUB_TOKEN }}
-                        commit-message: "chore(release): 更新 CHANGELOG.md v${{ needs.validate.outputs.new_version }}"
-                        branch: "chore/update-changelog-${{ needs.validate.outputs.new_version }}"
-                        base: "dev" # 目标分支是 dev
-                        title: "chore(release): 更新 CHANGELOG.md v${{ needs.validate.outputs.new_version }}"
-                        body: |
-                          自动更新 CHANGELOG.md。
           
-                          - 将 `[Unreleased]` 章节更新为 `v${{ needs.validate.outputs.new_version }}`。
-                          - 添加了新的 `[Unreleased]` 章节。
-                          - 更新了底部的版本链接。
-                        labels: "chore,automated"
-                        delete-branch: true
+          echo "--- CHANGELOG.md after update: ---"
+            cat $FILE
+            echo "-----------------------------------"
+          # --- 修正结束 ---
+          
+          - name: 创建 PR 到 dev 分支 (Create PR to dev)
+            uses: peter-evans/create-pull-request@v6
+            with:
+              token: ${{ secrets.GITHUB_TOKEN }}
+              commit-message: "chore(release): 更新 CHANGELOG.md v${{ needs.validate.outputs.new_version }}"
+              branch: "chore/update-changelog-${{ needs.validate.outputs.new_version }}"
+              base: "dev" # 目标分支是 dev
+              title: "chore(release): 更新 CHANGELOG.md v${{ needs.validate.outputs.new_version }}"
+              body: |
+                自动更新 CHANGELOG.md。
+                
+                - 将 `[Unreleased]` 章节更新为 `v${{ needs.validate.outputs.new_version }}`。
+                - 添加了新的 `[Unreleased]` 章节。
+                - 更新了底部的版本链接。
+              labels: "chore,automated"
+              delete-branch: true
