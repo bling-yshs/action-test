@@ -15,7 +15,7 @@ jobs:
         id: changelog_reader
         uses: mindsers/changelog-reader-action@v2.2.3
         with:
-          version: 'unreleased'
+          version: 'Unreleased'
           path: './CHANGELOG.md'
 
       - name: 上传编译结果到 pre-release (Upload build result to pre-release)
