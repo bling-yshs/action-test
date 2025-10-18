@@ -29,12 +29,19 @@ jobs:
           VERSION=$(grep '^version = ' ./src-tauri/Cargo.toml | awk '{print $3}' | tr -d '"')
           echo "cargo_version=$VERSION" >> $GITHUB_OUTPUT
 
+      # --- 这是被修改的步骤 ---
       - name: 获取最新的 Git Tag (Get latest Git tag)
         id: latest_tag
         run: |
-          # 获取最新的 tag，如果没有 tag 则默认为 v0.0.0
-          LATEST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "v0.0.0")
+          # 1. 列出所有 tags
+          # 2. Grep 筛选出严格的 vX.Y.Z 格式 (例如 v0.1.0, v1.2.3)，忽略 'alpha' 等
+          # 3. 按版本号排序 (sort -V)
+          # 4. 取最后一个 (即版本最高的)
+          # 5. 如果没有找到 (例如第一次发布)，则默认为 v0.0.0
+          LATEST_TAG=$(git tag | grep -E "^v[0-9]+\.[0-9]+\.[0-9]+$" | sort -V | tail -n 1 || echo "v0.0.0")
+          echo "找到的最新的语义化版本 Tag: $LATEST_TAG"
           echo "tag=$LATEST_TAG" >> $GITHUB_OUTPUT
+      # --- 修改结束 ---
 
       - name: 比较版本号 (Compare versions)
         id: compare
@@ -42,23 +49,23 @@ jobs:
           CARGO_VERSION=${{ steps.cargo.outputs.cargo_version }}
           LATEST_TAG_VERSION=${{ steps.latest_tag.outputs.tag }}
           LATEST_TAG_VERSION_NUM=${LATEST_TAG_VERSION#v} # 去掉 'v' -> 0.1.0
-
+          
           echo "Cargo 版本 (Current): $CARGO_VERSION"
           echo "Git Tag 版本 (Latest): $LATEST_TAG_VERSION_NUM"
-
+          
           if [ "$CARGO_VERSION" = "$LATEST_TAG_VERSION_NUM" ]; then
             echo "::error::Cargo.toml 版本 ($CARGO_VERSION) 等于最新的 Tag 版本 ($LATEST_TAG_VERSION_NUM)。请在发布前更新 Cargo.toml。"
             exit 1
           fi
-
+          
           # 使用 sort -V 来安全地比较版本号
           LATEST_VERSION=$(printf "%s\n%s" "$CARGO_VERSION" "$LATEST_TAG_VERSION_NUM" | sort -V | tail -n 1)
-
+          
           if [ "$LATEST_VERSION" != "$CARGO_VERSION" ]; then
             echo "::error::Cargo.toml 版本 ($CARGO_VERSION) 小于或等于最新的 Tag 版本 ($LATEST_TAG_VERSION_NUM)。请在发布前更新 Cargo.toml。"
             exit 1
           fi
-
+          
           echo "版本校验通过 (Validation passed)!"
           echo "new_version=$CARGO_VERSION" >> $GITHUB_OUTPUT
           echo "new_tag=v$CARGO_VERSION" >> $GITHUB_OUTPUT
@@ -114,7 +121,7 @@ jobs:
   # =======================================================
   update_changelog:
     name: 3. 更新 CHANGELOG 并创建 PR (Update CHANGELOG)
-    needs: [validate, build_and_release] # 必须在发布成功后运行
+    needs: [ validate, build_and_release ] # 必须在发布成功后运行
     runs-on: ubuntu-latest
     steps:
       - name: 克隆仓库 (Checkout repo)
@@ -174,7 +181,7 @@ jobs:
                         title: "chore(release): 更新 CHANGELOG.md v${{ needs.validate.outputs.new_version }}"
                         body: |
                           自动更新 CHANGELOG.md。
-                          
+          
                           - 将 `[Unreleased]` 章节更新为 `v${{ needs.validate.outputs.new_version }}`。
                           - 添加了新的 `[Unreleased]` 章节。
                           - 更新了底部的版本链接。
