@@ -1,0 +1,57 @@
+name: 🧪 shotium vs Playwright 渲染对比
+
+on:
+  push:
+    branches:
+      - shotium
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  compare:
+    runs-on: ubuntu-22.04
+    container:
+      image: mcr.microsoft.com/playwright:v1.61.0-jammy
+    timeout-minutes: 15
+
+    steps:
+      - name: 克隆当前仓库 (Clone current repo)
+        uses: actions/checkout@v7
+
+      - name: 安装依赖 (Install dependencies)
+        working-directory: .github/shotium-compare
+        run: npm install --no-audit --no-fund
+
+      - name: 记录系统字体 (Dump system fonts)
+        run: |
+          mkdir -p out
+          {
+            for f in sans-serif serif monospace system-ui Arial emoji "Noto Color Emoji"; do
+              echo "fc-match '$f': $(fc-match "$f")"
+            done
+            echo
+            fc-list : family file | sort
+          } > out/fonts.txt
+          head -n 10 out/fonts.txt
+
+      - name: 渲染并对比 (Render & compare)
+        working-directory: .github/shotium-compare
+        run: node render.mjs "$GITHUB_WORKSPACE/out"
+
+      - name: 上传对比总图 (Upload compare image)
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v7
+        with:
+          name: compare.png
+          archive: false
+          path: out/compare.png
+          if-no-files-found: ignore
+
+      - name: 上传全部渲染结果 (Upload all renders)
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v7
+        with:
+          name: shotium-vs-playwright
+          path: out/
