@@ -1,10 +1,10 @@
-// 用 @pixel.js/shotium 与 Playwright Chromium 渲染同一页面，逐用例截图并做像素对比。
+// 用 @shotkit/shotium 与 Playwright Chromium 渲染同一页面，逐用例截图并做像素对比。
 // 用法：node render.mjs <输出目录>
 import { appendFileSync, mkdirSync, writeFileSync } from 'node:fs';
 import { createRequire } from 'node:module';
 import { join, resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
-import shotium, { screenshot } from '@pixel.js/shotium';
+import shotium, { screenshot } from '@shotkit/shotium';
 import { chromium } from 'playwright';
 import { PNG } from 'pngjs';
 import pixelmatch from 'pixelmatch';
@@ -91,7 +91,7 @@ await page.goto(pathToFileURL(pagePath).href);
 await page.evaluate(() => document.fonts.ready);
 
 const versions = {
-  shotium: require('@pixel.js/shotium/package.json').version,
+  shotium: require('@shotkit/shotium/package.json').version,
   playwright: require('playwright/package.json').version,
   chromium: browser.version(),
 };
